@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/home.css">
+<script>window.ADVENAR_WORKER_URL = '';</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
 <script src="/main.js" defer></script>
@@ -112,7 +113,7 @@
   <h2>Get your free Lead Response <em>Audit.</em></h2>
   <div class="planner planner--full" aria-hidden="true"></div>
   <p class="lead">Fill this out. It takes 30 seconds. <strong>I'll text you to confirm, then your audit starts.</strong></p>
-  <form id="audit-form" method="post" action="#">
+  <form id="audit-form" action="mailto:advenarhq@gmail.com" method="post" enctype="text/plain">
     <div class="field">
       <label for="f-name">Your name</label>
       <input id="f-name" name="name" type="text" required autocomplete="name">
@@ -127,7 +128,7 @@
     </div>
     <div class="field">
       <label for="f-website">Website</label>
-      <input id="f-website" name="website" type="url" placeholder="yourbusiness.com">
+      <input id="f-website" name="website" type="text" inputmode="url" autocomplete="url" placeholder="yourbusiness.com">
     </div>
     <div class="field">
       <label for="f-trade">Trade</label>
