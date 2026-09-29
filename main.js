@@ -237,23 +237,38 @@
 
   /* ---------- Init ---------- */
 
-  var heroRoot = document.getElementById('planner');
-  var fullRoot = document.querySelector('.planner--full');
-  var hero = heroRoot && buildPlanner(heroRoot);
-  if (fullRoot) { buildPlanner(fullRoot); fillAll(fullRoot); }
+  function init() {
+    var heroRoot = document.getElementById('planner');
+    var fullRoot = document.querySelector('.planner--full');
+    var hero = heroRoot && buildPlanner(heroRoot);
+    if (fullRoot) { buildPlanner(fullRoot); fillAll(fullRoot); }
 
-  window.AdvenarPlanner = { fillAll: fillAll };
-  if (!hero) return;
+    window.AdvenarPlanner = { fillAll: fillAll };
+    if (!hero) return;
 
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!window.gsap || !window.ScrollTrigger || reduce) { fillAll(); return; }
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!window.gsap || !window.ScrollTrigger || reduce) { fillAll(); return; }
 
-  window.gsap.registerPlugin(window.ScrollTrigger);
-  var mm = window.gsap.matchMedia();
-  mm.add('(min-width: 900px)', function () { return desktopStory(hero); });
-  mm.add('(max-width: 899.98px)', function () { return phoneStory(hero); });
+    window.gsap.registerPlugin(window.ScrollTrigger);
+    mm = window.gsap.matchMedia();
+    mm.add('(min-width: 900px)', function () { return desktopStory(hero); });
+    mm.add('(max-width: 899.98px)', function () { return phoneStory(hero); });
 
-  if (document.fonts && document.fonts.ready) {
-    document.fonts.ready.then(function () { window.ScrollTrigger.refresh(); });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { window.ScrollTrigger.refresh(); });
+    }
+  }
+
+  // If anything throws, the hero must still read: show the finished week, or
+  // collapse the planner if it never got built.
+  var mm = null;
+  try {
+    init();
+  } catch (err) {
+    if (window.console) console.error('planner init failed', err);
+    try { if (mm) mm.revert(); } catch (e) { /* ignore */ }
+    var hr = document.getElementById('planner');
+    if (hr && hr.querySelector('.paper')) fillAll();
+    else if (hr) { hr.innerHTML = ''; hr.hidden = true; hr.classList.add('is-failed'); }
   }
 })();
