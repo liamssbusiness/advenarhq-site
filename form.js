@@ -19,7 +19,7 @@
     btn.disabled = true; status.textContent = 'Sending...';
     try {
       const r = await fetch(WORKER_URL + '/request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
-      const j = await r.json();
+      const j = await r.json().catch(() => ({}));
       if (j.ok) {
         form.reset();
         status.textContent = j.mode === 'audit'
