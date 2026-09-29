@@ -1,5 +1,5 @@
 (() => {
-  const WORKER_URL = window.ADVENAR_WORKER_URL || ''; // set in index.html head in Task 6
+  const WORKER_URL = (window.ADVENAR_WORKER_URL || '').replace(/\/+$/, ''); // set in index.html head in Task 6
   const form = document.getElementById('audit-form');
   const status = document.getElementById('form-status');
   const left = document.getElementById('audits-left');
@@ -7,7 +7,7 @@
   const FALLBACK = 'Something broke on my end. Email me at advenarhq@gmail.com and I\'ll start your audit today.';
   function setLeft(n) {
     if (!left || !Number.isFinite(n)) return;
-    if (n <= 0) { left.textContent = 'This month\'s 10 free audits are taken.'; if (btn) btn.textContent = 'Get on next month\'s list'; }
+    if (n <= 0) { left.textContent = 'This month\'s 10 free audits are taken.'; if (btn) btn.textContent = 'Get on next month\'s list'; const ps = document.getElementById('ps-link'); if (ps) ps.textContent = 'Get on next month\'s list'; }
     else left.textContent = `${n} of 10 free audits left this month.`;
   }
   if (WORKER_URL) fetch(WORKER_URL + '/count').then(r => r.json()).then(j => { if (j && Number.isFinite(j.left)) setLeft(j.left); }).catch(() => {});

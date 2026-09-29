@@ -6,14 +6,16 @@
 <title>Advenar | A full calendar you didn't have to chase</title>
 <meta name="description" content="Booked appointments that show up, for HVAC shops and home-service owners who can't answer the phone on the job.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://advenarhq.com/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:title" content="Advenar | A full calendar you didn't have to chase">
 <meta property="og:description" content="Booked appointments that show up, for HVAC shops and home-service owners who can't answer the phone on the job.">
 <link rel="preload" href="/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/home.css">
 <script>window.ADVENAR_WORKER_URL = '';</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" defer></script>
 <script src="/main.js" defer></script>
 <script src="/form.js" defer></script>
 </head>
@@ -148,7 +150,7 @@
     <button class="btn" type="submit">Get my free audit</button>
     <p id="form-status" role="status" aria-live="polite"></p>
   </form>
-  <p class="ps"><strong>P.S.</strong> The next lead that comes through your website is already out there. The audit shows you exactly what happens to it. <a href="#apply">Grab one of this month's 10 free spots.</a></p>
+  <p class="ps"><strong>P.S.</strong> The next lead that comes through your website is already out there. The audit shows you exactly what happens to it. <a id="ps-link" href="#apply">Grab one of this month's 10 free spots.</a></p>
 </section>
 
 </main>
