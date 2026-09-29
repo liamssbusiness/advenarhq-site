@@ -82,6 +82,10 @@
     SLOTS.forEach(function (s, i) {
       var slot = el('div', 'slot');
       slot.appendChild(el('div', 'ghost', '<b>' + s.time + '</b><span class="l">open</span>'));
+      var isLost = s.day === LOST.day && s.time === LOST.time;
+      // The lost lead covers the "open" slot with its own paper patch, so it never
+      // animates the ghost (batch 1 owns that).
+      if (isLost) slot.appendChild(el('div', 'mask'));
 
       var chip = el('div', 'chip');
       var appt = el('div', 'appt', '<b>' + s.time + '</b><span class="l">' + s.label + '</span>');
@@ -91,7 +95,7 @@
       chip.lastChild.style.setProperty('--cr', (TILT[(i + 4) % TILT.length] * 6 - 4) + 'deg');
       slot.appendChild(chip);
 
-      if (s.day === LOST.day && s.time === LOST.time) {
+      if (isLost) {
         var lost = el('div', 'lost');
         lost.innerHTML =
           '<span class="ring"></span>' +
@@ -101,7 +105,7 @@
         slot.appendChild(lost);
         slot.appendChild(note);
         refs.lost = {
-          el: lost, slot: slot, ghost: slot.querySelector('.ghost'), note: note,
+          el: lost, slot: slot, mask: slot.querySelector('.mask'), note: note,
           card: lost.querySelector('.appt'), ring: lost.querySelector('.ring'), flash: lost.querySelector('.flash')
         };
       }
@@ -122,7 +126,7 @@
     var roots = target ? [target] : document.querySelectorAll('.planner');
     Array.prototype.forEach.call(roots, function (root) {
       root.classList.add('is-full');
-      root.querySelectorAll('.pl-stage, .paper-glow, .ghost, .chip, .lost, .note, .check path').forEach(function (n) {
+      root.querySelectorAll('.pl-stage, .paper-glow, .ghost, .mask, .chip, .lost, .note, .check path').forEach(function (n) {
         n.removeAttribute('style');
       });
       root.querySelectorAll('.chip').forEach(function (c) { c.classList.add('filled'); });
@@ -131,23 +135,27 @@
 
   /* ---------- Motion ---------- */
 
-  var DROP = 0.8; // seconds of timeline per chip landing
-  var INK = { strokeDashoffset: 0, duration: 0.5, ease: 'power1.inOut' };
+  // Timeline pacing (seconds): chip stagger, landing, check ink, check stagger.
+  var DESKTOP = { gap: 0.3, drop: 0.8, ink: 0.5, inkGap: 0.32 };
+  var PHONE = { gap: 0.1, drop: 0.6, ink: 0.35, inkGap: 0.12 };
 
   // Drop a batch of chips, then ink their checks one by one.
   // Returns the time each chip lands, for the .filled marker.
-  function addBatch(tl, items, gap, at) {
+  function addBatch(tl, items, at, pace) {
+    var d = pace.drop;
     var marks = [];
     items.forEach(function (s, i) {
-      var t = at + i * gap;
-      // Opacity arrives early so the "open" ghost never reads through a half-landed card.
-      tl.fromTo(s.chip, { y: -18, rotation: -3 }, { y: 0, rotation: 0, duration: DROP, ease: 'power3.out' }, t)
-        .fromTo(s.chip, { opacity: 0 }, { opacity: 1, duration: DROP * 0.35, ease: 'none' }, t)
-        .fromTo(s.ghost, { opacity: 1 }, { opacity: 0, duration: DROP * 0.35, ease: 'none' }, t);
-      marks.push({ el: s.chip, at: t + DROP * 0.6 });
+      var t = at + i * pace.gap;
+      // The "open" slot clears before the card appears, so the two never show at once.
+      tl.fromTo(s.ghost, { opacity: 1 }, { opacity: 0, duration: d * 0.2, ease: 'none' }, t)
+        .fromTo(s.chip, { y: -18, rotation: -3 }, { y: 0, rotation: 0, duration: d, ease: 'power3.out' }, t)
+        .fromTo(s.chip, { opacity: 0 }, { opacity: 1, duration: d * 0.25, ease: 'none' }, t + d * 0.2);
+      marks.push({ el: s.chip, at: t + d * 0.6 });
     });
+    var inkAt = at + (items.length - 1) * pace.gap + d * 0.85;
     items.forEach(function (s, i) {
-      tl.fromTo(s.path, { strokeDashoffset: 1 }, Object.assign({}, INK), i === 0 ? '>+0.1' : '>-0.18');
+      tl.fromTo(s.path, { strokeDashoffset: 1 },
+        { strokeDashoffset: 0, duration: pace.ink, ease: 'power1.inOut' }, inkAt + i * pace.inkGap);
     });
     return marks;
   }
@@ -177,7 +185,7 @@
     });
     // Lands in Tue 2:00 and rings (red-amber pulse)...
     lt.fromTo(L.el, { opacity: 0, x: 0, y: -22, rotation: -4 }, { opacity: 1, y: 0, rotation: 0, duration: 1, ease: 'power3.out' })
-      .fromTo(L.ghost, { opacity: 1 }, { opacity: 0, duration: 0.5, ease: 'none' }, '<0.3')
+      .fromTo(L.mask, { opacity: 0 }, { opacity: 1, duration: 0.5, ease: 'none' }, '<0.3')
       .fromTo(L.ring, { opacity: 0, scale: 1 }, { opacity: 0.9, scale: 1.16, duration: 0.45, ease: 'sine.inOut', repeat: 3, yoyo: true }, '>')
       .fromTo(L.flash, { opacity: 0 }, { opacity: 0.85, duration: 0.45, ease: 'sine.inOut', repeat: 3, yoyo: true }, '<')
       // ...nobody picks up: it goes cold...
@@ -191,7 +199,7 @@
         duration: 2.2, ease: 'power1.in'
       }, '>+0.6')
       .to(L.card, { opacity: 0, duration: 0.9, ease: 'none' }, '<1.3')
-      .to(L.ghost, { opacity: 1, duration: 0.6, ease: 'none' }, '<0.2')
+      .to(L.mask, { opacity: 0, duration: 0.6, ease: 'none' }, '<0.2')
       .to(L.note, { opacity: 0, duration: 0.7, ease: 'none' }, '>+0.5');
 
     // Three steps, three batches (4, 4, 3). The last also lifts the glow.
@@ -203,7 +211,7 @@
           ? { trigger: steps[k], start: 'top 80%', endTrigger: '#how', end: 'bottom bottom', scrub: 0.8 }
           : { trigger: steps[k], start: 'top 80%', end: 'top 62%', scrub: 0.8 }
       });
-      trackFilled(tl, addBatch(tl, byBatch(p, n), 0.3, 0));
+      trackFilled(tl, addBatch(tl, byBatch(p, n), 0, DESKTOP));
       if (last) tl.fromTo(p.glow, { opacity: 0 }, { opacity: 1, duration: 1, ease: 'power1.inOut' }, '>-0.2');
     });
 
@@ -218,7 +226,8 @@
     });
     var marks = [];
     [1, 2, 3].forEach(function (n) {
-      marks = marks.concat(addBatch(tl, byBatch(p, n), 0.12, n === 1 ? 0.45 : tl.duration() + 0.05));
+      // Each batch starts while the previous batch's last checks are still inking.
+      marks = marks.concat(addBatch(tl, byBatch(p, n), n === 1 ? 0.45 : tl.duration() - 0.3, PHONE));
     });
     tl.fromTo(p.glow, { opacity: 0 }, { opacity: 1, duration: 1, ease: 'power1.inOut' }, '>-0.3');
     trackFilled(tl, marks);
