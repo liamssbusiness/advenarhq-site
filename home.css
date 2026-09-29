@@ -30,7 +30,7 @@ h2{font-size:clamp(32px,5.2vw,52px);line-height:1.08;margin-bottom:34px;text-wra
 h3{font:600 19px/1.35 var(--sans);color:var(--cream);margin-bottom:8px}
 
 section{max-width:680px;margin:0 auto;padding:96px 20px;position:relative}
-section+section:not(#hero)::before{
+main section:not(#hero)::before{
   content:"";display:block;width:44px;height:1px;background:var(--gold);opacity:.55;margin:0 0 56px;
 }
 section p{margin:0 0 1.15em;color:var(--muted)}
@@ -40,7 +40,6 @@ section p strong{color:#fff}
 #hero{max-width:1100px;text-align:center;padding:150px 20px 72px}
 #hero .sub{font-size:clamp(18px,2.2vw,22px);line-height:1.5;max-width:34em;margin:30px auto 40px;color:var(--cream)}
 #hero .small{margin-top:20px;font-size:14px;color:var(--muted)}
-#planner{margin-top:72px;min-height:1px}
 
 .btn{
   display:inline-block;background:var(--gold);color:var(--deep);font:600 16px/1.2 var(--sans);
@@ -113,3 +112,133 @@ footer em{font-family:var(--serif);font-size:17px}
   .steps li{padding-left:52px}
   #audit-form{padding:22px 18px}
 }
+
+/* ================= Story layout: planner beside hero, problem, how ================= */
+main{overflow-x:clip}
+.story-art{position:relative;padding:0 20px 8px}
+.story-art #planner{max-width:560px;margin:0 auto}
+/* Hold the planner's space before main.js builds it, so #problem never jumps (phones) */
+#planner:empty{min-height:234px}
+@media (min-width:600px) and (max-width:899.98px){#planner:empty{min-height:300px}}
+
+@media (min-width:900px){
+  .story{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);column-gap:clamp(40px,5vw,88px);
+    max-width:1400px;margin:0 auto;padding:0 clamp(28px,4vw,64px);
+  }
+  .story>section{grid-column:1;width:100%;max-width:580px;margin:0;padding-left:0;padding-right:0}
+  /* Top-anchored (not flex-centered) so a font swap can't re-center and shift the whole hero */
+  #hero{grid-row:1;min-height:100vh;display:flex;flex-direction:column;align-items:flex-start;text-align:left;padding:max(120px,calc(50vh - 200px)) 0 96px}
+  #hero h1{margin:0;font-size:clamp(52px,5.6vw,80px)}
+  #hero .sub{margin:28px 0 36px;font-size:clamp(18px,1.6vw,21px)}
+  #problem{grid-row:2}
+  #how{grid-row:3}
+  .story-art{
+    grid-column:2;grid-row:1/4;align-self:start;position:sticky;top:0;height:100vh;
+    display:flex;align-items:center;justify-content:center;padding:0;
+  }
+  .story-art #planner{width:100%;max-width:660px}
+}
+
+/* A soft pool of light on the wall behind the paper */
+.story-art::before{
+  content:"";position:absolute;left:50%;top:50%;width:130%;height:120%;transform:translate(-50%,-50%);
+  background:radial-gradient(closest-side,rgba(227,181,103,.10),rgba(227,181,103,.035) 55%,transparent);
+  pointer-events:none;
+}
+
+/* ================= The paper planner ================= */
+.planner{position:relative;color:var(--ink)}
+.pl-stage{position:relative}
+.paper-glow{
+  position:absolute;inset:0;border-radius:4px;transform:rotate(-1.2deg);pointer-events:none;opacity:0;
+  box-shadow:0 0 150px 6px rgba(227,181,103,.30),0 0 60px rgba(227,181,103,.16);
+}
+.planner.is-full .paper-glow{opacity:1}
+
+.paper{
+  position:relative;container-type:inline-size;border-radius:4px;transform:rotate(-1.2deg);
+  padding:clamp(14px,3.4vw,24px) clamp(12px,3vw,22px) clamp(14px,3.2vw,22px);
+  background-color:#f4efe4;
+  background-image:
+    radial-gradient(130% 90% at 22% 0%,rgba(255,252,243,.7),rgba(255,252,243,0) 62%),
+    linear-gradient(180deg,rgba(110,80,35,0) 62%,rgba(110,80,35,.08)),
+    linear-gradient(rgba(27,26,23,.06) 1px,transparent 1px);
+  background-size:100% 100%,100% 100%,100% 18px;
+  box-shadow:0 1px 2px rgba(0,0,0,.35),0 40px 80px -24px rgba(0,0,0,.85),0 0 90px rgba(227,181,103,.18);
+}
+/* paper grain */
+.paper::before{
+  content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:.5;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .34 0 0 0 0 .22 0 0 0 .5 -.12'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.paper>*{position:relative}
+
+.pl-head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:0 2px 14px}
+.pl-kicker{display:block;font:600 10px/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:#6f6858;margin-bottom:6px}
+.pl-date{display:block;font:italic 400 clamp(22px,4.4vw,30px)/1 var(--serif);color:var(--ink);letter-spacing:-.01em}
+.pl-key{display:flex;align-items:center;gap:4px;font:600 17px/1 var(--hand);color:#4d6b52;white-space:nowrap}
+.pl-key .check{position:static;width:20px;height:16px;transform:rotate(-6deg)}
+
+.pl-week{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.pl-day{
+  display:flex;flex-direction:column;gap:clamp(6px,1.4cqi,9px);padding:clamp(7px,1.5cqi,10px) clamp(6px,1.3cqi,9px) 16px;
+  border:1px solid var(--ink);border-radius:3px;background:rgba(251,248,241,.72);
+}
+.pl-dn{display:flex;align-items:baseline;justify-content:space-between;padding:0 1px 5px;border-bottom:1px solid rgba(27,26,23,.18);margin-bottom:1px}
+.pl-dn span{font:600 10px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+.pl-dn b{font:400 clamp(17px,3.4cqi,22px)/1 var(--serif);color:var(--ink)}
+
+/* Each slot stacks: the dashed "open" ghost, the booked chip, and (Tue 2:00) the lost lead */
+.slot{display:grid;position:relative}
+.slot>*{grid-area:1/1}
+.ghost,.appt{padding:.55em .65em .65em;border-radius:3px;font:400 clamp(10px,1.85cqi,12px)/1.28 var(--sans)}
+.ghost b,.appt b{display:block;font-weight:600;font-size:1.1em;letter-spacing:.01em;font-variant-numeric:tabular-nums}
+.ghost .l,.appt .l{display:block;margin-top:2px}
+.ghost{border:1px dashed #b7b0a1;color:#9b9486}
+.ghost .l{font-style:italic}
+
+.chip{position:relative;opacity:0}
+.appt{
+  height:100%;background:var(--ink);color:#f4efe4;transform:rotate(var(--r,0deg));
+  box-shadow:0 1px 0 rgba(0,0,0,.2),0 4px 8px -3px rgba(40,28,10,.45);
+}
+.appt .l{color:rgba(244,239,228,.78)}
+
+/* Hand-drawn check, inked by stroke-dashoffset (pathLength=1) */
+.check{position:absolute;right:-9px;top:-12px;width:27px;height:21px;overflow:visible;pointer-events:none;transform:rotate(var(--cr,-4deg))}
+.check path{fill:none;stroke:var(--green);stroke-width:2.7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 2;stroke-dashoffset:1}
+.check--key path{stroke-dashoffset:0}
+
+.planner.is-full .chip{opacity:1}
+.planner.is-full .ghost{opacity:0}
+.planner.is-full .check path{stroke-dashoffset:0}
+
+/* The lead that got away (desktop story only) */
+.lost{position:relative;z-index:2;opacity:0}
+.appt--lost{position:relative;overflow:hidden;box-shadow:0 1px 0 rgba(0,0,0,.2),0 6px 12px -4px rgba(120,40,10,.5)}
+.appt--lost b,.appt--lost .l{position:relative}
+.flash{position:absolute;inset:0;background:linear-gradient(135deg,#d9582f,#e39a3b);opacity:0}
+.ring{position:absolute;inset:-4px;border:2px solid #e0703f;border-radius:6px;opacity:0;pointer-events:none}
+.note{
+  position:absolute;left:3px;right:-4px;top:calc(100% + 7px);opacity:0;pointer-events:none;
+  font:600 clamp(16px,3.3cqi,20px)/.95 var(--hand);color:#c2542f;transform:rotate(-4deg);transform-origin:0 0;
+}
+.planner.is-full .lost,.planner.is-full .note{display:none}
+
+/* Narrow paper (phones): time only */
+@container (max-width:440px){
+  .pl-week{gap:5px}
+  .pl-day{min-height:0;padding:6px 4px 8px;gap:6px}
+  .pl-dn{flex-direction:column;align-items:center;gap:3px;padding-bottom:5px}
+  .pl-dn span{font-size:9px;letter-spacing:.1em}
+  .pl-dn b{font-size:17px}
+  .ghost,.appt{padding:6px 2px;text-align:center}
+  .ghost b,.appt b{font-size:11px}
+  .ghost .l,.appt .l{display:none}
+  .check{right:-7px;top:-9px;width:21px;height:17px}
+  .pl-key{font-size:15px}
+}
+
+/* Second copy at #apply: already full */
+.planner--full{max-width:600px;margin:8px auto 56px}
