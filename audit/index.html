@@ -6,6 +6,19 @@
 <title>Missed-Call Audit | Advenar</title>
 <meta name="description" content="HVAC, plumbing, roofing and lawn care owners: answer four quick questions and see what the calls you miss are costing you each month and each year.">
 <link rel="canonical" href="https://advenarhq.com/audit/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Advenar">
+<meta property="og:url" content="https://advenarhq.com/audit/">
+<meta property="og:title" content="Missed-Call Audit | Advenar">
+<meta property="og:description" content="Four quick questions, about a minute. See a careful estimate of what the calls you miss on the job may be costing you each month.">
+<meta property="og:image" content="https://advenarhq.com/img/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Advenar. A full calendar you didn't have to chase.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Missed-Call Audit | Advenar">
+<meta name="twitter:description" content="Four quick questions, about a minute. See a careful estimate of what the calls you miss on the job may be costing you each month.">
+<meta name="twitter:image" content="https://advenarhq.com/img/og.png">
 <meta name="theme-color" content="#0b0d17">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="preload" href="/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
@@ -35,6 +48,8 @@ h2{font-size:clamp(26px,7vw,34px);color:var(--ink)}
 .card{background:var(--paper);color:var(--ink);border-radius:6px;padding:18px 14px;box-shadow:0 30px 60px -24px rgba(0,0,0,.8),0 0 70px rgba(227,181,103,.12)}
 .q{font-size:21px;line-height:1.25;font-weight:700;margin:0 0 8px;display:block}
 .q:focus{outline:none}
+.hint a{color:var(--ink)}
+.homelink{color:inherit;display:inline-block;padding:12px 4px;margin:-12px 0}
 .hint{display:block;font-size:15px;color:var(--ink-soft);margin:8px 0 0;line-height:1.45}
 .stepper{display:flex;gap:8px;align-items:stretch;margin:14px 0 0}
 .stp{flex:0 0 58px;min-height:58px;border:2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);font:700 28px/1 Inter,sans-serif;cursor:pointer;touch-action:manipulation}
@@ -62,6 +77,14 @@ input[type=text],input[type=tel]{font-size:18px}
 .link{text-align:left;background:none;border:0;padding:10px 0;min-height:44px;color:var(--ink);font:inherit;font-size:16px;text-decoration:underline;cursor:pointer}
 .link.center{display:block;margin:0 auto;text-align:center}
 .small{font-size:14px;color:var(--ink-soft)}
+.contactline{margin:14px 0 0}
+.contactline a,#next .small a{color:var(--ink);display:inline-block;padding:12px 0}
+.foot{max-width:560px;margin:0 auto;padding:8px 16px 48px;color:var(--muted);font-size:14px;text-align:center}
+.foot p{margin:0 0 4px}
+.foot a{color:var(--cream);display:inline-block;padding:12px 0}
+.foot .links{justify-content:center;column-gap:16px}
+.links{display:flex;flex-wrap:wrap;align-items:center;column-gap:16px}
+.contactline.links{justify-content:flex-start}
 .err{color:var(--danger);font-size:15px;font-weight:600;margin:8px 0 0}
 .err:empty{display:none}
 .flag{margin:12px 0 0;padding:10px 12px;border-radius:8px;background:#fff1cf;color:#4d3800;font-size:15px;line-height:1.4}
@@ -81,17 +104,19 @@ details.help .plain{min-height:48px}
 #result{margin-top:0;border-radius:6px;background:var(--midnight-deep);color:var(--cream);padding:22px 16px;border:1px solid rgba(227,181,103,.45)}
 #result:focus{outline:none}
 #result .k{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
-#result .big{font-family:"Instrument Serif",Georgia,serif;color:var(--gold);font-size:clamp(46px,15vw,72px);line-height:1.02;margin:4px 0 0;overflow-wrap:anywhere}
-#result .big2{font-family:"Instrument Serif",Georgia,serif;color:var(--cream);font-size:clamp(26px,8vw,36px);line-height:1.1;margin:6px 0 0;overflow-wrap:anywhere}
-#result .big2 span{font-family:Inter,sans-serif;font-size:16px;color:var(--muted)}
+#result .big{font-family:"Instrument Serif",Georgia,serif;color:var(--cream);font-size:clamp(34px,10vw,48px);line-height:1.08;margin:6px 0 0;overflow-wrap:anywhere}
+#result .big span{font-family:Inter,sans-serif;font-size:16px;color:var(--muted)}
+#result .what{margin:6px 0 0;color:var(--muted);font-size:16px}
+#result .year{margin:14px 0 0;color:var(--cream);font-size:15px}
 .range{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 0}
 .range div{border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:8px 6px;text-align:center}
-.range div.mid{border-color:var(--gold)}
+.range div.mid{border-color:var(--gold);background:rgba(227,181,103,.08)}
 .range b{display:block;font-size:clamp(16px,4.6vw,20px);line-height:1.2;overflow-wrap:anywhere}
 .range span{display:block;font-size:13px;color:var(--muted);line-height:1.3;margin-top:2px}
 .rangenote{font-size:14px;color:var(--muted);margin:8px 0 0}
 #result .math{margin:16px 0 0;color:var(--cream);font-size:16px;border-top:1px solid rgba(255,255,255,.14);padding-top:14px}
-#result .note{margin:10px 0 0;color:var(--muted);font-size:14px}
+#result .note{margin:12px 0 0;color:var(--cream);font-size:15px}
+#result .note strong{color:var(--cream)}
 #result .check{margin:14px 0 0;padding:10px 12px;border-radius:8px;background:#fff1cf;color:#4d3800;font-size:15px}
 #result .check ul{margin:4px 0 0;padding-left:18px}
 #result .check button{background:none;border:0;padding:6px 0;min-height:44px;color:#4d3800;font:inherit;font-size:15px;text-decoration:underline;cursor:pointer}
@@ -118,11 +143,11 @@ details.help .plain{min-height:48px}
 </head>
 <body>
 <main class="wrap">
-  <p class="brand"><b>Advenar</b> &nbsp;|&nbsp; the Missed-Call Audit &nbsp;|&nbsp; <a href="/" style="color:inherit">Back to home</a></p>
+  <p class="brand"><b>Advenar</b> &nbsp;|&nbsp; the Missed-Call Audit &nbsp;|&nbsp; <a class="homelink" href="/">Back to home</a></p>
 
   <header id="intro">
     <h1>What are the calls you miss <em>while you're on the job</em> costing you?</h1>
-    <p class="sub">Four quick questions, about 30 seconds. No email needed.</p>
+    <p class="sub">Four quick questions, about a minute. No email needed.</p>
   </header>
 
   <section class="card" id="quiz" aria-label="The four questions">
@@ -151,7 +176,7 @@ details.help .plain{min-height:48px}
       <span class="hint" id="missed-h">Same week, same Recents list. Count the missed calls and the ones that went to voicemail. Your own count beats a guess.</span>
       <div class="flag" id="missed-f" role="status"></div>
       <button type="button" class="link" id="guess14" aria-describedby="g14-h">Not sure? Start with a guess of 14% of my calls</button>
-      <span class="hint" id="g14-h" style="margin-top:0">A starting guess only. CallRail's January 2025 report put home services at about 14% missed. That is one company's data, so replace it with your own count.</span>
+      <span class="hint" id="g14-h" style="margin-top:0">A starting guess only. CallRail's January 2025 small business benchmark report put home services at about 14% missed calls (<a href="https://www.callrail.com/blog/callrail-releases-benchmark-report" target="_blank" rel="noopener">CallRail's report</a>). That is one company's data, so replace it with your own count.</span>
     </div>
 
     <div class="step" data-step="3" hidden>
@@ -209,6 +234,11 @@ details.help .plain{min-height:48px}
     <div id="result" tabindex="-1" aria-live="polite"></div>
 
     <section id="next" class="card">
+      <h2>If you want a second pair of eyes</h2>
+      <p style="margin:10px 0 14px">I'll go through your numbers with you for 15 minutes and show you where your missed calls are going. It's a low-pressure look. You decide what, if anything, to do about it.</p>
+      <a class="btn" id="book" href="#" rel="noopener">Book a 15-minute call with Liam</a>
+      <p class="small" id="bookdev" hidden style="margin:8px 0 0">Dev note: BOOKING_URL is not set yet, so this button does nothing.</p>
+      <p class="small contactline links">Or reach me directly: <a href="tel:+12135195647">Call 213-519-5647</a> <a href="sms:+12135195647">Text me</a> <a href="mailto:advenarhq@gmail.com">advenarhq@gmail.com</a></p>
       <div class="actions" id="actions">
         <button type="button" class="btn" id="plan-btn" aria-expanded="false" aria-controls="leadbox">Send me my free one-page plan</button>
       </div>
@@ -237,13 +267,12 @@ details.help .plain{min-height:48px}
           <div id="formstatus" class="status" role="status" hidden></div>
         </form>
       </div>
-      <p class="or small" id="or-talk" style="text-align:center;margin:16px 0 8px">or talk it through</p>
-      <a class="btn ghost" id="book" href="#" rel="noopener">Book a call with Liam</a>
-      <p class="small" id="bookdev" hidden style="margin:8px 0 0">Dev note: BOOKING_URL is not set yet, so this button does nothing.</p>
+      <p class="or small" id="or-talk" hidden></p>
       <div class="tools">
         <button type="button" class="link" id="copy-btn">Copy my result</button>
         <button type="button" class="link" id="change-btn">Change my numbers</button>
       </div>
+      <p class="small">What you type here stays in your browser. <a href="/privacy/">Privacy</a></p>
       <div id="copystatus" class="status ok" role="status" hidden></div>
       <textarea id="sharebox" readonly hidden aria-label="Your result as text. Select all and copy."></textarea>
       <div id="textme" hidden>
@@ -254,8 +283,13 @@ details.help .plain{min-height:48px}
   </section>
 
   <p class="why"><strong>Why is this free?</strong> I'm Liam. I run Advenar, a small agency that fills the calendar for local service businesses with appointments that show up. I built this audit myself for the shops I call. Advenar is new, so I would rather earn your trust with something useful than with a pitch. If the number is no big deal, keep it and move on.</p>
-  <p class="src">This is an estimate from the numbers you type, not a promise. Nothing you enter above is sent anywhere until you press "Send me the plan".</p>
+  <p class="src">This is an estimate from the numbers you type, not a promise. The numbers you type stay in your browser and are not sent anywhere. <!-- If LEAD_FORM_ON is ever turned on, update this line. --></p>
 </main>
+<footer class="foot">
+  <p>Advenar &middot; Tempe, Arizona</p>
+  <p class="links"><a href="tel:+12135195647">Call 213-519-5647</a> <a href="sms:+12135195647">Text me</a> <a href="mailto:advenarhq@gmail.com">advenarhq@gmail.com</a></p>
+  <p><a href="/privacy/">Privacy Policy</a> &middot; &copy; 2026 Advenar</p>
+</footer>
 
 <script>
 // ===== CONFIG: set these two before going live =====
@@ -497,14 +531,18 @@ function buildShareText(r, url){
     }
     var zero = r.perMonth === 0;
     var tail = zero ? '<p class="note">That comes to $0 with these numbers. If you really answer every call, nice. Check the numbers if that surprises you.</p>'
-                    : '<p class="note">I only count missed callers at your own booking rate, not every missed call, so this is on the cautious side.</p>';
+                    : '<p class="note"><strong>This is on the cautious side.</strong> I only count missed callers at your own booking rate, not every missed call.</p>';
+    var yearLine = (q && h) ? 'Over a full year that is about ' + esc(formatMoney(r.perYear)) + '.'
+      : 'Over a full year that is about ' + esc(formatMoney(r.perYear)) + ', or ' + esc(formatMoney(r.low.perYear)) + ' to ' + esc(formatMoney(r.high.perYear)) + ' if the booking rate is one notch off.';
     $("result").innerHTML =
       (isExample ? '<p class="exnote">These are made-up example numbers. Tap "Change my numbers" below to use yours.</p>' : "") +
-      '<p class="k">Roughly lost every month</p><p class="big">' + esc(formatMoney(r.perMonth)) + '</p>' +
-      '<p class="big2">' + esc(formatMoney(r.perYear)) + ' <span>a year</span></p>' +
+      '<p class="k">A careful estimate, per month</p><p class="big">About ' + esc(formatMoney(r.perMonth)) + ' <span>a month</span></p>' +
+      '<p class="what">That is roughly what the calls you miss may be costing you.</p>' +
       '<div class="range" role="group" aria-label="Low, likely and high">' + cells + '</div>' +
-      '<p class="rangenote">Per month. Low and high move your booking rate one notch (1 out of 10) down and up. Per year that is ' + esc(formatMoney(r.low.perYear)) + ' to ' + esc(formatMoney(r.high.perYear)) + '.</p>' +
-      '<p class="math">' + esc(mathSentence(r)) + '</p>' + tail + flagHtml;
+      '<p class="rangenote">Per month. Low and high move your booking rate one notch (1 out of 10) down and up.</p>' +
+      tail +
+      '<p class="year">' + yearLine + '</p>' +
+      '<p class="math">' + esc(mathSentence(r)) + '</p>' + flagHtml;
     $("result").querySelectorAll("[data-go]").forEach(function(b){
       b.addEventListener("click", function(){ backToQuiz(Number(b.getAttribute("data-go"))); });
     });

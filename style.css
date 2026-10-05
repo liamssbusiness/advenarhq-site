@@ -8,3 +8,13 @@ h2{font-size:1.15rem;margin:36px 0 8px}
 .muted{color:var(--muted)}
 a{color:var(--accent)}
 footer{max-width:680px;margin:0 auto;padding:24px 16px 48px;border-top:1px solid var(--line);color:var(--muted);font-size:.9rem}
+
+h3{font-size:1rem;margin:22px 0 6px}
+section{margin:0 0 8px}
+#jarvis{margin-top:48px;padding-top:8px;border-top:1px solid var(--line)}
+footer p{margin:0 0 4px}
+footer a{display:inline-block;padding:12px 0}
+
+.links{display:flex;flex-wrap:wrap;align-items:center;column-gap:16px}
+.links span{display:none}
+footer p.links a{padding:12px 0}
