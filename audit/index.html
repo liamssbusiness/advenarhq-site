@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Missed-Call Audit | Advenar</title>
+<meta name="description" content="HVAC, plumbing, roofing and lawn care owners: answer four quick questions and see what the calls you miss are costing you each month and each year.">
+<link rel="canonical" href="https://advenarhq.com/audit/">
+<meta name="theme-color" content="#0b0d17">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/fonts/instrument-serif.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/inter-var.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Same self-hosted fonts as the home page (licenses: /fonts/OFL.txt) */
+@font-face{font-family:"Instrument Serif";font-style:normal;font-weight:400;font-display:swap;src:url(/fonts/instrument-serif.woff2) format("woff2")}
+@font-face{font-family:"Instrument Serif";font-style:italic;font-weight:400;font-display:swap;src:url(/fonts/instrument-serif-italic.woff2) format("woff2")}
+@font-face{font-family:Inter;font-style:normal;font-weight:400 700;font-display:swap;src:url(/fonts/inter-var.woff2) format("woff2")}
+:root{
+  --midnight:#1d2340; --midnight-deep:#0b0d17;
+  --cream:#efe6d6; --muted:#c4bdb0; --gold:#e3b567;
+  --paper:#f4efe4; --ink:#1b1a17; --ink-soft:#44403a; --line:#d8cfbc; --danger:#9c1f18;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;color:var(--cream);font:17px/1.55 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:var(--midnight-deep) radial-gradient(ellipse at 50% -10%,var(--midnight),var(--midnight-deep) 70%) no-repeat fixed}
+.wrap{max-width:560px;margin:0 auto;padding:24px 16px 56px}
+.brand{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 20px}
+.brand b{color:var(--gold);font-weight:600}
+h1,h2{font-family:"Instrument Serif",Georgia,"Times New Roman",serif;font-weight:400;line-height:1.1;margin:0}
+h1{font-size:clamp(32px,9vw,46px)}
+h1 em,h2 em{color:var(--gold)}
+h2{font-size:clamp(26px,7vw,34px);color:var(--ink)}
+.sub{color:var(--muted);margin:12px 0 20px;font-size:18px}
+.card{background:var(--paper);color:var(--ink);border-radius:6px;padding:18px 14px;box-shadow:0 30px 60px -24px rgba(0,0,0,.8),0 0 70px rgba(227,181,103,.12)}
+.q{font-size:21px;line-height:1.25;font-weight:700;margin:0 0 8px;display:block}
+.q:focus{outline:none}
+.hint{display:block;font-size:15px;color:var(--ink-soft);margin:8px 0 0;line-height:1.45}
+.stepper{display:flex;gap:8px;align-items:stretch;margin:14px 0 0}
+.stp{flex:0 0 58px;min-height:58px;border:2px solid var(--ink);border-radius:12px;background:#fff;color:var(--ink);font:700 28px/1 Inter,sans-serif;cursor:pointer;touch-action:manipulation}
+.stp:active{background:#e8dfc9}
+.row{flex:1;min-width:0;display:flex;align-items:stretch;border:2px solid #8c8068;border-radius:12px;background:#fff;overflow:hidden}
+.row:focus-within{outline:3px solid var(--midnight);outline-offset:2px}
+.row .aff{display:flex;align-items:center;padding:0 0 0 14px;color:var(--ink-soft);font-weight:700;font-size:20px}
+.row input{flex:1;min-width:0;width:100%;border:0;outline:0;background:transparent;font:700 24px/1 Inter,sans-serif;color:var(--ink);padding:10px 12px;min-height:54px;text-align:center}
+.row .aff + input{text-align:left;padding-left:4px}
+input[type=text],input[type=tel]{font-size:18px}
+.plain{width:100%;min-height:54px;font:inherit;font-size:18px;color:var(--ink);padding:10px 12px;border:2px solid #8c8068;border-radius:12px;background:#fff}
+.plain:focus{outline:3px solid var(--midnight);outline-offset:2px}
+.tiles{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:14px 0 0;border:0;padding:0;min-width:0}
+.tile{position:relative;display:block}
+.tile input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;width:100%;height:100%}
+.tile span{display:flex;align-items:center;justify-content:center;min-height:54px;border:2px solid var(--ink);border-radius:12px;background:#fff;font-weight:700;font-size:22px}
+.tile input:checked + span{background:var(--midnight);color:var(--cream);border-color:var(--midnight)}
+.tile input:focus-visible + span{outline:3px solid var(--midnight);outline-offset:3px}
+.tiles-cap{display:flex;justify-content:space-between;font-size:14px;color:var(--ink-soft);margin:8px 2px 0}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;padding:14px 22px;border:0;border-radius:999px;background:var(--gold);color:var(--midnight-deep);font:inherit;font-weight:700;font-size:19px;text-align:center;text-decoration:none;cursor:pointer}
+.btn:hover{filter:brightness(1.05)}
+.btn:focus-visible,.link:focus-visible,.stp:focus-visible,summary:focus-visible{outline:3px solid var(--midnight);outline-offset:3px}
+.btn.ghost{background:transparent;border:2px solid var(--ink);color:var(--ink)}
+.btn[aria-disabled=true],.btn:disabled{opacity:.55;cursor:not-allowed}
+.link{text-align:left;background:none;border:0;padding:10px 0;min-height:44px;color:var(--ink);font:inherit;font-size:16px;text-decoration:underline;cursor:pointer}
+.link.center{display:block;margin:0 auto;text-align:center}
+.small{font-size:14px;color:var(--ink-soft)}
+.err{color:var(--danger);font-size:15px;font-weight:600;margin:8px 0 0}
+.err:empty{display:none}
+.flag{margin:12px 0 0;padding:10px 12px;border-radius:8px;background:#fff1cf;color:#4d3800;font-size:15px;line-height:1.4}
+.flag:empty{display:none}
+.echo{margin:8px 2px 0;font-size:15px;color:var(--ink-soft);min-height:22px}
+.progress{display:flex;gap:6px;margin:0 0 14px}
+.progress i{flex:1;height:6px;border-radius:3px;background:#cfc5ae}
+.progress i.on{background:var(--midnight)}
+.pcount{font-size:14px;font-weight:600;color:var(--ink-soft);margin:0 0 6px;letter-spacing:.04em}
+.nav{margin:18px 0 0}
+details.help{margin:14px 0 0;border:1.5px dashed #8c8068;border-radius:10px;padding:2px 12px}
+details.help summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:600;font-size:16px}
+details.help .two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 10px}
+details.help label{font-size:14px;font-weight:600;display:block;margin:0 0 4px}
+details.help .plain{min-height:48px}
+.btn.small-btn{min-height:48px;font-size:16px;margin:0 0 10px;background:var(--midnight);color:var(--cream)}
+#result{margin-top:0;border-radius:6px;background:var(--midnight-deep);color:var(--cream);padding:22px 16px;border:1px solid rgba(227,181,103,.45)}
+#result:focus{outline:none}
+#result .k{font-size:14px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0}
+#result .big{font-family:"Instrument Serif",Georgia,serif;color:var(--gold);font-size:clamp(46px,15vw,72px);line-height:1.02;margin:4px 0 0;overflow-wrap:anywhere}
+#result .big2{font-family:"Instrument Serif",Georgia,serif;color:var(--cream);font-size:clamp(26px,8vw,36px);line-height:1.1;margin:6px 0 0;overflow-wrap:anywhere}
+#result .big2 span{font-family:Inter,sans-serif;font-size:16px;color:var(--muted)}
+.range{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0 0}
+.range div{border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:8px 6px;text-align:center}
+.range div.mid{border-color:var(--gold)}
+.range b{display:block;font-size:clamp(16px,4.6vw,20px);line-height:1.2;overflow-wrap:anywhere}
+.range span{display:block;font-size:13px;color:var(--muted);line-height:1.3;margin-top:2px}
+.rangenote{font-size:14px;color:var(--muted);margin:8px 0 0}
+#result .math{margin:16px 0 0;color:var(--cream);font-size:16px;border-top:1px solid rgba(255,255,255,.14);padding-top:14px}
+#result .note{margin:10px 0 0;color:var(--muted);font-size:14px}
+#result .check{margin:14px 0 0;padding:10px 12px;border-radius:8px;background:#fff1cf;color:#4d3800;font-size:15px}
+#result .check ul{margin:4px 0 0;padding-left:18px}
+#result .check button{background:none;border:0;padding:6px 0;min-height:44px;color:#4d3800;font:inherit;font-size:15px;text-decoration:underline;cursor:pointer}
+#result .check button:focus-visible{outline:3px solid var(--midnight);outline-offset:2px}
+#result .exnote{margin:0 0 14px;padding:10px 12px;border-radius:8px;background:rgba(227,181,103,.18);color:var(--cream);font-size:15px}
+#next{margin-top:16px}
+#next .actions{display:grid;gap:12px}
+#next .tools{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:6px 0 0}
+#leadbox p{margin:10px 0}
+.field{margin:0 0 16px}
+.field label{display:block;font-weight:600;font-size:16px;margin:0 0 6px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.status{margin:14px 0 0;padding:12px;border-radius:8px;font-size:16px}
+.status.ok{background:#e1f2e7;color:#12552f}
+.status.dev{background:#fff1cf;color:#5a4300}
+.status.bad{background:#fbe3e1;color:#7c1a14}
+#sharebox{width:100%;min-height:110px;font:inherit;font-size:16px;margin:8px 0 0;padding:10px;border:2px solid #8c8068;border-radius:10px}
+.why{margin:30px 4px 0;color:var(--muted);font-size:15px}
+.why strong{color:var(--cream)}
+.src{margin:18px 4px 0;color:var(--muted);font-size:13px}
+[hidden]{display:none!important}
+@media (min-width:640px){.wrap{padding-top:48px}.card{padding:26px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <p class="brand"><b>Advenar</b> &nbsp;|&nbsp; the Missed-Call Audit &nbsp;|&nbsp; <a href="/" style="color:inherit">Back to home</a></p>
+
+  <header id="intro">
+    <h1>What are the calls you miss <em>while you're on the job</em> costing you?</h1>
+    <p class="sub">Four quick questions, about 30 seconds. No email needed.</p>
+  </header>
+
+  <section class="card" id="quiz" aria-label="The four questions">
+    <p class="pcount" id="pcount">Question 1 of 4</p>
+    <div class="progress" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></div>
+
+    <div class="step" data-step="1">
+      <label class="q" for="calls" id="q1">In a normal week, how many calls do you get from people wanting work?</label>
+      <div class="stepper">
+        <button type="button" class="stp" data-for="calls" data-d="-1" aria-label="One fewer call">-</button>
+        <div class="row"><input id="calls" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="0" autocomplete="off" aria-describedby="calls-h calls-f"></div>
+        <button type="button" class="stp" data-for="calls" data-d="1" aria-label="One more call">+</button>
+      </div>
+      <span class="hint" id="calls-h">Open your phone's Recents (call history). Pick a normal week, not your busiest. Count every call from someone who wanted work, whether you answered or not. Skip family, suppliers and spam. A rough count is fine.</span>
+      <div class="flag" id="calls-f" role="status"></div>
+      <button type="button" class="link" id="example">Just curious? Show me with example numbers</button>
+    </div>
+
+    <div class="step" data-step="2" hidden>
+      <label class="q" for="missed" id="q2">Of those, how many did you not get to talk to?</label>
+      <div class="stepper">
+        <button type="button" class="stp" data-for="missed" data-d="-1" aria-label="One fewer missed call">-</button>
+        <div class="row"><input id="missed" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="0" autocomplete="off" aria-describedby="missed-h missed-f"></div>
+        <button type="button" class="stp" data-for="missed" data-d="1" aria-label="One more missed call">+</button>
+      </div>
+      <span class="hint" id="missed-h">Same week, same Recents list. Count the missed calls and the ones that went to voicemail. Your own count beats a guess.</span>
+      <div class="flag" id="missed-f" role="status"></div>
+      <button type="button" class="link" id="guess14" aria-describedby="g14-h">Not sure? Start with a guess of 14% of my calls</button>
+      <span class="hint" id="g14-h" style="margin-top:0">A starting guess only. CallRail's January 2025 report put home services at about 14% missed. That is one company's data, so replace it with your own count.</span>
+    </div>
+
+    <div class="step" data-step="3" hidden>
+      <label class="q" for="value" id="q3">What does a typical job pay you?</label>
+      <div class="stepper">
+        <button type="button" class="stp" data-for="value" data-d="-50" aria-label="Fifty dollars less">-</button>
+        <div class="row"><span class="aff" aria-hidden="true">$</span><input id="value" type="text" inputmode="numeric" pattern="[0-9]*" placeholder="0" autocomplete="off" aria-describedby="value-h value-e value-f"></div>
+        <button type="button" class="stp" data-for="value" data-d="50" aria-label="Fifty dollars more">+</button>
+      </div>
+      <div class="echo" id="value-e" aria-live="polite"></div>
+      <span class="hint" id="value-h">Look at last month's invoices. Add up what you were paid and divide by the number of jobs. A typical job, not your biggest.</span>
+      <div class="flag" id="value-f" role="status"></div>
+      <details class="help" id="valhelp">
+        <summary>Do the math for me</summary>
+        <div class="two">
+          <div><label for="vh-total">Total paid last month ($)</label><input class="plain" id="vh-total" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"></div>
+          <div><label for="vh-jobs">Number of jobs</label><input class="plain" id="vh-jobs" type="text" inputmode="numeric" pattern="[0-9]*" autocomplete="off"></div>
+        </div>
+        <button type="button" class="btn small-btn" id="vh-use">Use that</button>
+        <div class="err" id="vh-e" role="alert"></div>
+      </details>
+    </div>
+
+    <div class="step" data-step="4" hidden>
+      <fieldset style="border:0;padding:0;margin:0;min-width:0">
+        <legend class="q" id="q4" tabindex="-1" style="padding:0">Out of 10 people who call and reach you, how many hire you?</legend>
+        <div class="tiles" id="tiles" role="radiogroup" aria-labelledby="q4">
+          <label class="tile"><input type="radio" name="rate" value="0"><span>0</span></label>
+          <label class="tile"><input type="radio" name="rate" value="1"><span>1</span></label>
+          <label class="tile"><input type="radio" name="rate" value="2"><span>2</span></label>
+          <label class="tile"><input type="radio" name="rate" value="3"><span>3</span></label>
+          <label class="tile"><input type="radio" name="rate" value="4"><span>4</span></label>
+          <label class="tile"><input type="radio" name="rate" value="5"><span>5</span></label>
+          <label class="tile"><input type="radio" name="rate" value="6"><span>6</span></label>
+          <label class="tile"><input type="radio" name="rate" value="7"><span>7</span></label>
+          <label class="tile"><input type="radio" name="rate" value="8"><span>8</span></label>
+          <label class="tile"><input type="radio" name="rate" value="9"><span>9</span></label>
+          <label class="tile"><input type="radio" name="rate" value="10"><span>10</span></label>
+        </div>
+      </fieldset>
+      <div class="tiles-cap" aria-hidden="true"><span>0 = none</span><span>10 = all of them</span></div>
+      <span class="hint" id="rate-h">Think of the last 10 people you actually talked to. Tap how many hired you. I count missed callers at this same rate, not as if every one would have booked.</span>
+      <div class="echo" id="rate-from"></div>
+      <div class="flag" id="rate-f" role="status"></div>
+    </div>
+
+    <div class="err" id="stoperr" role="alert"></div>
+    <div class="nav">
+      <button type="button" class="btn" id="next-btn">Next</button>
+      <button type="button" class="link" id="back-btn" hidden>Back</button>
+    </div>
+  </section>
+
+  <section id="resultview" hidden>
+    <div id="result" tabindex="-1" aria-live="polite"></div>
+
+    <section id="next" class="card">
+      <div class="actions" id="actions">
+        <button type="button" class="btn" id="plan-btn" aria-expanded="false" aria-controls="leadbox">Send me my free one-page plan</button>
+      </div>
+      <div id="leadbox" hidden>
+        <h2>Want a plan to <em style="color:#7a4f06">stop the leak</em>?</h2>
+        <p>Leave your details and I will look at how calls get answered at your business, then send you a one-page plan with the first fixes I would make. Free. If you want help doing it, we can talk. If not, the plan is yours.</p>
+        <form id="lead" novalidate>
+          <div class="field">
+            <label for="name">Your name</label>
+            <input class="plain" id="name" name="name" type="text" autocomplete="name" required>
+            <div class="err" id="name-e" role="alert"></div>
+          </div>
+          <div class="field">
+            <label for="biz">Business name and trade</label>
+            <input class="plain" id="biz" name="business" type="text" autocomplete="organization" placeholder="e.g. Smith Heating and Air, HVAC" required>
+            <div class="err" id="biz-e" role="alert"></div>
+          </div>
+          <div class="field">
+            <label for="contact">Best phone or email</label>
+            <input class="plain" id="contact" name="contact" type="text" inputmode="email" autocomplete="email tel" required>
+            <div class="err" id="contact-e" role="alert"></div>
+          </div>
+          <div class="hp" aria-hidden="true"><label>Leave empty <input type="text" name="website" id="website" tabindex="-1" autocomplete="off"></label></div>
+          <button class="btn" type="submit" id="send">Send me the plan</button>
+          <p class="small" style="margin:10px 0 0">I use this only to send the plan and follow up about it. No list, no spam.</p>
+          <div id="formstatus" class="status" role="status" hidden></div>
+        </form>
+      </div>
+      <p class="or small" id="or-talk" style="text-align:center;margin:16px 0 8px">or talk it through</p>
+      <a class="btn ghost" id="book" href="#" rel="noopener">Book a call with Liam</a>
+      <p class="small" id="bookdev" hidden style="margin:8px 0 0">Dev note: BOOKING_URL is not set yet, so this button does nothing.</p>
+      <div class="tools">
+        <button type="button" class="link" id="copy-btn">Copy my result</button>
+        <button type="button" class="link" id="change-btn">Change my numbers</button>
+      </div>
+      <div id="copystatus" class="status ok" role="status" hidden></div>
+      <textarea id="sharebox" readonly hidden aria-label="Your result as text. Select all and copy."></textarea>
+      <div id="textme" hidden>
+        <button type="button" class="btn ghost" aria-disabled="true" style="margin-top:10px">Text me my number</button>
+        <p class="small" style="margin:8px 0 0">Dev note: placeholder only. Texting needs a backend (an SMS service), so nothing is sent and this button does nothing. Shown only with ?dev=1.</p>
+      </div>
+    </section>
+  </section>
+
+  <p class="why"><strong>Why is this free?</strong> I'm Liam. I run Advenar, a small agency that fills the calendar for local service businesses with appointments that show up. I built this audit myself for the shops I call. Advenar is new, so I would rather earn your trust with something useful than with a pitch. If the number is no big deal, keep it and move on.</p>
+  <p class="src">This is an estimate from the numbers you type, not a promise. Nothing you enter above is sent anywhere until you press "Send me the plan".</p>
+</main>
+
+<script>
+// ===== CONFIG: set these two before going live =====
+const FORM_ENDPOINT = "";   // e.g. "https://example.com/submit". Empty = form sends NOTHING and shows a "not connected" message.
+const BOOKING_URL   = "https://cal.com/advenarhq/15min"; // real booking link for a call with Liam
+const LEAD_FORM_ON  = false; // Launch: lead form hidden until it is connected. To re-enable: set FORM_ENDPOINT above, then set this to true.
+// ===================================================
+
+// BEGIN CALC (pure, no DOM; tests load this block)
+var WEEKS_PER_YEAR = 52;
+var WEEKS_PER_MONTH = 52 / 12;
+var CAPS = { calls: 5000, value: 100000 };
+var RATE_NOTCH = 10; // range uses booking rate one notch (1 out of 10 = 10 points) down and up
+
+function parseNum(x){
+  if (typeof x === "number") return isFinite(x) ? x : NaN;
+  if (typeof x !== "string") return NaN;
+  var s = x.replace(/[$,%\s]/g, "");
+  if (s === "" || !/^-?\d*\.?\d+$|^-?\d+\.$/.test(s)) return NaN;
+  return parseFloat(s);
+}
+
+function round1(n){ return Math.round(n * 10) / 10; }
+function num1(n){ return round1(n).toLocaleString("en-US"); }
+function formatMoney(n){ return "$" + Math.round(n).toLocaleString("en-US"); }
+
+// Tap 0 to 10 <-> percent. The URL and the math stay in percent.
+function outOfTenToPct(n){
+  n = parseNum(n); if (isNaN(n)) return NaN;
+  return Math.min(10, Math.max(0, n)) * 10;
+}
+function pctToOutOfTen(p){
+  p = parseNum(p); if (isNaN(p)) return NaN;
+  return Math.round(Math.min(100, Math.max(0, p)) / 10);
+}
+
+// "Do the math for me": last month's total paid divided by number of jobs, whole dollars.
+function avgJobValue(total, jobs){
+  total = parseNum(total); jobs = parseNum(jobs);
+  if (isNaN(total) || isNaN(jobs) || jobs <= 0 || total < 0) return NaN;
+  return Math.round(total / jobs);
+}
+
+function lossFor(missed, ratePct, value){
+  var jobsPerWeek = missed * (ratePct / 100);
+  return { ratePct: ratePct, jobsPerMonth: jobsPerWeek * WEEKS_PER_MONTH,
+           perMonth: jobsPerWeek * WEEKS_PER_MONTH * value, perYear: jobsPerWeek * WEEKS_PER_YEAR * value };
+}
+
+// Returns { ready, perMonth, perYear, jobsPerMonth, missedPerWeek, callsPerWeek, ratePct, value, low, high, notes[] }
+// Lost jobs = unanswered calls per week x share of reached callers who book. Never every missed call.
+// low / high = the same math with the booking rate one notch (10 points) down and up. They are an honest
+// range around the estimate, not a prediction.
+function calcMissedCallLoss(input){
+  input = input || {};
+  var notes = [];
+  var calls = parseNum(input.calls), missed = parseNum(input.missed),
+      value = parseNum(input.value), rate = parseNum(input.rate);
+  var blank = [calls, missed, value, rate].some(function(n){ return isNaN(n); });
+  function clean(n, max, label){
+    if (isNaN(n)) return 0;
+    if (n < 0) { notes.push(label + " can't be negative, so I used 0."); return 0; }
+    if (n > max) { notes.push(label + " was capped at " + max.toLocaleString("en-US") + "."); return max; }
+    return n;
+  }
+  calls = clean(calls, CAPS.calls, "Calls per week");
+  missed = clean(missed, CAPS.calls, "Unanswered calls");
+  value = clean(value, CAPS.value, "Job value");
+  rate = clean(rate, 100, "Booking rate");
+  if (missed > calls) { notes.push("Unanswered calls can't be more than total calls, so I used " + calls + "."); missed = calls; }
+  var mid = lossFor(missed, rate, value);
+  return {
+    ready: !blank, perMonth: mid.perMonth, perYear: mid.perYear,
+    jobsPerMonth: mid.jobsPerMonth,
+    missedPerWeek: missed, callsPerWeek: calls, ratePct: rate, value: value,
+    low: lossFor(missed, Math.max(0, rate - RATE_NOTCH), value),
+    high: lossFor(missed, Math.min(100, rate + RATE_NOTCH), value),
+    notes: notes
+  };
+}
+
+// Gentle "does that look right?" checks. Never blocks. Returns [{field, code, msg}].
+function sanityFlags(input){
+  input = input || {};
+  var calls = parseNum(input.calls), missed = parseNum(input.missed),
+      value = parseNum(input.value), rate = parseNum(input.rate), out = [];
+  function add(field, code, msg){ out.push({ field: field, code: code, msg: msg }); }
+  if (!isNaN(calls) && calls >= 150) add("calls", "calls-high", "That is " + num1(calls).toString() + " calls a week. Double-check there is no extra zero.");
+  if (!isNaN(calls) && !isNaN(missed)) {
+    if (missed > calls) add("missed", "missed-over", "You have more unanswered (" + num1(missed) + ") than total calls (" + num1(calls) + "). I will use " + num1(calls) + " for now. Maybe the total is too low?");
+    else if (missed === 0 && calls > 0) add("missed", "missed-zero", "No missed calls at all? Look at Recents once more for voicemails you never returned. If it really is zero, great.");
+    else if (calls > 0 && missed / calls >= 0.5) add("missed", "missed-half", "That is half your calls or more unanswered. If that is right, this number will be big. Worth one more count.");
+  }
+  if (!isNaN(value)) {
+    if (value >= 10000) add("value", "value-high", formatMoney(value) + " for a typical job? If that is your biggest job, use an everyday one instead.");
+    else if (value > 0 && value < 25) add("value", "value-low", formatMoney(value) + " for a typical job? Check for a missing zero.");
+  }
+  if (!isNaN(rate)) {
+    if (rate === 0) add("rate", "rate-zero", "0 out of 10 means nobody who reaches you ever hires you, so missed calls cost $0 here. Think of your last 10 callers.");
+    else if (rate >= 100) add("rate", "rate-all", "10 out of 10 means everyone who reaches you hires you. If a few shop around, tap a lower number.");
+  }
+  return out;
+}
+
+function mathSentence(r){
+  var jobs = num1(r.jobsPerMonth);
+  return "You miss " + num1(r.missedPerWeek) + " call" + (r.missedPerWeek === 1 ? "" : "s") + " a week. If " + num1(r.ratePct / 10) +
+    " out of 10 callers hire you and a job is worth " + formatMoney(r.value) + ", that is about " + jobs + " job" + (jobs === "1" ? "" : "s") +
+    " a month (" + num1(r.missedPerWeek) + " x " + num1(r.ratePct) + "% x 52 weeks / 12 months), or " + formatMoney(r.perMonth) + ".";
+}
+
+function buildPrefillUrl(base, r){
+  return base + "?calls=" + encodeURIComponent(String(r.callsPerWeek)) + "&missed=" + encodeURIComponent(String(r.missedPerWeek)) +
+    "&value=" + encodeURIComponent(String(r.value)) + "&rate=" + encodeURIComponent(String(r.ratePct));
+}
+
+// Plain text for "Copy my result". url is optional (only passed when the page is on http or https).
+function buildShareText(r, url){
+  if (!r || !r.ready) return "";
+  var lines = [
+    "My Missed-Call Audit result (Advenar). An estimate, not a promise.",
+    "About " + formatMoney(r.perMonth) + " a month, " + formatMoney(r.perYear) + " a year, lost to calls I miss.",
+    "Range: " + formatMoney(r.low.perMonth) + " to " + formatMoney(r.high.perMonth) + " a month (booking rate one notch down and up).",
+    mathSentence(r)
+  ];
+  if (url) lines.push("Run your own: " + url);
+  return lines.join("\n");
+}
+// END CALC
+
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var FIELDS = ["calls","missed","value","rate"];
+  var st = { calls:"", missed:"", value:"", rate:"" };   // rate is kept in PERCENT
+  var step = 1, last = null, isExample = false;
+
+  function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];}); }
+
+  // ----- steps -----
+  function showStep(n, focus){
+    step = n;
+    document.querySelectorAll(".step").forEach(function(el){ el.hidden = Number(el.getAttribute("data-step")) !== n; });
+    document.querySelectorAll(".progress i").forEach(function(el, i){ el.className = i < n ? "on" : ""; });
+    $("pcount").textContent = "Question " + n + " of 4";
+    $("next-btn").textContent = n === 4 ? "Show me my number" : "Next";
+    $("back-btn").hidden = n === 1;
+    $("stoperr").textContent = "";
+    showFlags();
+    if (focus){
+      if (n === 4) $("q4").focus(); else $(FIELDS[n-1]).focus();
+    }
+  }
+
+  function showFlags(){
+    var fl = sanityFlags(st);
+    ["calls","missed","value","rate"].forEach(function(f){
+      var el = $(f + "-f"); if (!el) return;
+      var m = fl.filter(function(x){ return x.field === f; }).map(function(x){ return x.msg; });
+      el.textContent = m.join(" ");
+    });
+    var v = parseNum(st.value);
+    $("value-e").textContent = isNaN(v) ? "" : "That is " + formatMoney(v) + " per job.";
+  }
+
+  function setRateUI(){
+    var p = parseNum(st.rate), tap = pctToOutOfTen(p);
+    document.querySelectorAll("#tiles input").forEach(function(r){ r.checked = !isNaN(p) && p % 10 === 0 && Number(r.value) === tap; });
+    $("rate-from").textContent = (!isNaN(p) && p % 10 !== 0) ? "From your link: " + num1(p) + "%. Tap a number to change it." : "";
+  }
+
+  function stepValid(){
+    var f = FIELDS[step-1];
+    if (f === "rate"){
+      if (isNaN(parseNum(st.rate))){ $("stoperr").textContent = "Tap a number from 0 to 10."; return false; }
+      return true;
+    }
+    if (isNaN(parseNum(st[f]))){ $("stoperr").textContent = "Type a number first. 0 is fine."; $(f).focus(); return false; }
+    return true;
+  }
+
+  function next(){
+    if (!stepValid()) return;
+    if (step < 4) showStep(step + 1, true); else showResult();
+  }
+
+  FIELDS.slice(0,3).forEach(function(id){
+    $(id).addEventListener("input", function(){ st[id] = $(id).value; $("stoperr").textContent = ""; showFlags(); });
+    $(id).addEventListener("keydown", function(e){ if (e.key === "Enter"){ e.preventDefault(); next(); } });
+  });
+  document.querySelectorAll("#tiles input").forEach(function(r){
+    r.addEventListener("change", function(){ st.rate = String(outOfTenToPct(r.value)); $("rate-from").textContent = ""; $("stoperr").textContent = ""; showFlags(); });
+  });
+  document.querySelectorAll(".stp").forEach(function(b){
+    b.addEventListener("click", function(){
+      var id = b.getAttribute("data-for"), d = Number(b.getAttribute("data-d")), cur = parseNum($(id).value);
+      var max = id === "value" ? CAPS.value : CAPS.calls;
+      var nv = Math.min(max, Math.max(0, (isNaN(cur) ? 0 : cur) + d));
+      $(id).value = String(nv); st[id] = String(nv); $("stoperr").textContent = ""; showFlags();
+    });
+  });
+  $("next-btn").addEventListener("click", next);
+  $("back-btn").addEventListener("click", function(){ if (step > 1) showStep(step - 1, true); });
+
+  $("guess14").addEventListener("click", function(){
+    var c = parseNum($("calls").value);
+    if (isNaN(c) || c <= 0){ $("stoperr").textContent = "Go back and type your weekly calls first, then I can guess 14% of them."; return; }
+    var g = String(Math.round(Math.min(c, CAPS.calls) * 0.14));
+    $("missed").value = g; st.missed = g; $("stoperr").textContent = ""; showFlags();
+  });
+  $("vh-use").addEventListener("click", useHelper);
+  ["vh-total","vh-jobs"].forEach(function(id){ $(id).addEventListener("keydown", function(e){ if (e.key === "Enter"){ e.preventDefault(); useHelper(); } }); });
+  function useHelper(){
+    var v = avgJobValue($("vh-total").value, $("vh-jobs").value);
+    if (isNaN(v)){ $("vh-e").textContent = "Type last month's total and the number of jobs (at least 1)."; return; }
+    $("vh-e").textContent = ""; $("value").value = String(v); st.value = String(v); showFlags(); $("valhelp").open = false; $("value").focus();
+  }
+  $("example").addEventListener("click", function(){
+    $("calls").value = "40"; $("missed").value = "6"; $("value").value = "450";
+    st.calls = "40"; st.missed = "6"; st.value = "450"; st.rate = "40"; setRateUI();
+    isExample = true; showResult();
+  });
+
+  // ----- result -----
+  function showResult(){
+    var r = calcMissedCallLoss(st);
+    last = r;
+    if (!r.ready) return;
+    var q = r.low.ratePct === r.ratePct, h = r.high.ratePct === r.ratePct;
+    var cells = "";
+    if (!q) cells += '<div><b>' + esc(formatMoney(r.low.perMonth)) + '</b><span>if ' + esc(num1(r.low.ratePct/10)) + ' of 10 hire you</span></div>';
+    cells += '<div class="mid"><b>' + esc(formatMoney(r.perMonth)) + '</b><span>likely, at ' + esc(num1(r.ratePct/10)) + ' of 10</span></div>';
+    if (!h) cells += '<div><b>' + esc(formatMoney(r.high.perMonth)) + '</b><span>if ' + esc(num1(r.high.ratePct/10)) + ' of 10 hire you</span></div>';
+    var flags = sanityFlags(st).concat(r.notes.map(function(n){ return { field:"", msg:n }; }));
+    var jump = { calls:1, missed:2, value:3, rate:4 };
+    var flagHtml = "";
+    if (flags.length){
+      flagHtml = '<div class="check"><strong>Quick check on your answers</strong><ul>' +
+        flags.map(function(f){ return "<li>" + esc(f.msg) + (f.field ? ' <button type="button" data-go="' + jump[f.field] + '">Change it</button>' : "") + "</li>"; }).join("") + "</ul></div>";
+    }
+    var zero = r.perMonth === 0;
+    var tail = zero ? '<p class="note">That comes to $0 with these numbers. If you really answer every call, nice. Check the numbers if that surprises you.</p>'
+                    : '<p class="note">I only count missed callers at your own booking rate, not every missed call, so this is on the cautious side.</p>';
+    $("result").innerHTML =
+      (isExample ? '<p class="exnote">These are made-up example numbers. Tap "Change my numbers" below to use yours.</p>' : "") +
+      '<p class="k">Roughly lost every month</p><p class="big">' + esc(formatMoney(r.perMonth)) + '</p>' +
+      '<p class="big2">' + esc(formatMoney(r.perYear)) + ' <span>a year</span></p>' +
+      '<div class="range" role="group" aria-label="Low, likely and high">' + cells + '</div>' +
+      '<p class="rangenote">Per month. Low and high move your booking rate one notch (1 out of 10) down and up. Per year that is ' + esc(formatMoney(r.low.perYear)) + ' to ' + esc(formatMoney(r.high.perYear)) + '.</p>' +
+      '<p class="math">' + esc(mathSentence(r)) + '</p>' + tail + flagHtml;
+    $("result").querySelectorAll("[data-go]").forEach(function(b){
+      b.addEventListener("click", function(){ backToQuiz(Number(b.getAttribute("data-go"))); });
+    });
+    $("copy-btn").hidden = isExample;
+    $("copystatus").hidden = true; $("sharebox").hidden = true;
+    $("quiz").hidden = true; $("intro").hidden = true; $("resultview").hidden = false;
+    window.scrollTo(0, 0);
+    $("result").focus({ preventScroll: true });
+  }
+
+  function backToQuiz(n){
+    isExample = false;
+    $("resultview").hidden = true; $("quiz").hidden = false; $("intro").hidden = false;
+    setRateUI(); showStep(n || 1, false);
+    window.scrollTo(0, 0);
+  }
+  $("change-btn").addEventListener("click", function(){ backToQuiz(1); });
+
+  // ----- copy my result (works offline) -----
+  function shareUrl(){
+    if (!last || !/^https?:$/.test(location.protocol)) return "";
+    return buildPrefillUrl(location.origin + location.pathname, last);
+  }
+  function copyNote(msg){ var s = $("copystatus"); s.textContent = msg; s.hidden = false; }
+  $("copy-btn").addEventListener("click", function(){
+    var text = buildShareText(last, shareUrl());
+    if (!text) return;
+    function fallback(){
+      var box = $("sharebox"); box.value = text; box.hidden = false; box.focus(); box.select();
+      try { box.setSelectionRange(0, text.length); } catch(e){}
+      var ok = false; try { ok = document.execCommand("copy"); } catch(e){}
+      copyNote(ok ? "Copied. Paste it into a text or note." : "Your result is selected below. Press and hold, then tap Copy.");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(function(){ $("sharebox").hidden = true; copyNote("Copied. Paste it into a text or note."); }, fallback);
+    } else fallback();
+  });
+
+  // ----- next step area -----
+  if (!LEAD_FORM_ON){ $("actions").hidden = true; $("leadbox").hidden = true; $("or-talk").hidden = true; }
+  $("plan-btn").addEventListener("click", function(){
+    $("leadbox").hidden = false; $("actions").hidden = true; $("plan-btn").setAttribute("aria-expanded","true");
+    $("name").focus();
+  });
+
+  var bookSet = BOOKING_URL && BOOKING_URL.indexOf("REPLACE") !== 0;
+  var book = $("book");
+  if (bookSet){ book.href = BOOKING_URL; book.target = "_blank"; }
+  else { book.setAttribute("aria-disabled","true"); book.addEventListener("click", function(e){ e.preventDefault(); }); $("bookdev").hidden = false; }
+
+  try { if (new URLSearchParams(location.search).get("dev") === "1") $("textme").hidden = false; } catch(e){}
+
+  // lead form
+  function setErr(id,msg){ $(id).textContent = msg || ""; }
+  function status(kind,msg){ var s=$("formstatus"); s.className="status "+kind; s.textContent=msg; s.hidden=false; }
+  $("lead").addEventListener("submit", function(e){
+    e.preventDefault();
+    var name=$("name").value.trim(), biz=$("biz").value.trim(), contact=$("contact").value.trim(), bad=false;
+    setErr("name-e", name ? "" : "Please add your name."); if(!name) bad=true;
+    setErr("biz-e", biz ? "" : "Please add your business name."); if(!biz) bad=true;
+    var isEmail=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contact), isPhone=(contact.match(/\d/g)||[]).length>=7 && /^[\d\s()+.\-x]+$/i.test(contact);
+    if(!(isEmail||isPhone)){ setErr("contact-e","Please add a phone number or email I can reach you at."); bad=true; } else setErr("contact-e","");
+    if (bad) return;
+    if ($("website").value) { status("ok","Thanks."); return; } // honeypot: pretend success, send nothing
+    var payload = { source:"missed-call-calculator", name:name, business:biz, contact:contact,
+      numbers: (last && !isExample) ? { callsPerWeek:last.callsPerWeek, unansweredPerWeek:last.missedPerWeek, avgJobValue:last.value, bookingRatePct:last.ratePct,
+        bookingOutOf10:round1(last.ratePct/10), lostPerMonth:Math.round(last.perMonth), lostPerYear:Math.round(last.perYear),
+        lowPerMonth:Math.round(last.low.perMonth), highPerMonth:Math.round(last.high.perMonth) } : null,
+      submittedAt: new Date().toISOString() };
+    if (!FORM_ENDPOINT){
+      status("dev","Not connected yet (dev mode). Nothing was sent. Set FORM_ENDPOINT in the script to turn this on.");
+      return;
+    }
+    var btn=$("send"); btn.disabled=true; btn.textContent="Sending...";
+    fetch(FORM_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
+      .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); status("ok","Got it, " + name + ". I will send your plan soon. Want to talk sooner? Use the button below to book a call."); $("lead").reset(); })
+      .catch(function(){ status("bad","That did not go through. Please try again, or use the booking button below."); })
+      .then(function(){ btn.disabled=false; btn.textContent="Send me the plan"; });
+  });
+
+  // ----- start: optional prefill ?calls=40&missed=6&value=450&rate=40 (rate is a percent) -----
+  try {
+    var qs = new URLSearchParams(location.search), got = 0;
+    FIELDS.forEach(function(k){ if (qs.has(k)){ st[k] = qs.get(k); if (k !== "rate") $(k).value = qs.get(k); got++; } });
+    setRateUI();
+    if (got === 4 && calcMissedCallLoss(st).ready) { showResult(); }
+    else { var first = FIELDS.findIndex(function(k){ return isNaN(parseNum(st[k])); }); showStep(first < 0 ? 1 : first + 1, false); }
+  } catch(e){ showStep(1, false); }
+})();
+</script>
+</body>
+</html>
