@@ -25,7 +25,7 @@
       if (j.ok) {
         form.reset();
         say(j.mode === 'audit'
-          ? 'Got it. Your test has started. I\'ll text you to confirm, and your report lands within 3 business days. Want to talk sooner? <a href="https://cal.com/advenarhq/15min">Book a 15-minute call.</a>'
+          ? 'Got it. I\'ll text you to confirm. Your report lands within 3 business days. Want to talk sooner? <a href="https://cal.com/advenarhq/15min">Book a 15-minute call.</a>'
           : 'You\'re on next month\'s list. I\'ll text you the day a spot opens. Want to talk sooner? <a href="https://cal.com/advenarhq/15min">Book a 15-minute call.</a>');
         setLeft(j.left);
       } else if (r.status === 429) {
