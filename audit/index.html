@@ -234,17 +234,12 @@ details.help .plain{min-height:48px}
     <div id="result" tabindex="-1" aria-live="polite"></div>
 
     <section id="next" class="card">
-      <h2>If you want a second pair of eyes</h2>
-      <p style="margin:10px 0 14px">I'll go through your numbers with you for 15 minutes and show you where your missed calls are going. It's a low-pressure look. You decide what, if anything, to do about it.</p>
-      <a class="btn" id="book" href="#" rel="noopener">Book a 15-minute call with Liam</a>
-      <p class="small" id="bookdev" hidden style="margin:8px 0 0">Dev note: BOOKING_URL is not set yet, so this button does nothing.</p>
-      <p class="small contactline links">Or reach me directly: <a href="tel:+12135195647">Call 213-519-5647</a> <a href="sms:+12135195647">Text me</a> <a href="mailto:advenarhq@gmail.com">advenarhq@gmail.com</a></p>
+      <h2>Want a plan to <em style="color:#7a4f06">stop the leak</em>?</h2>
+      <p style="margin:10px 0 14px">Leave your details and I will look at how calls get answered at your business, then send you a one-page plan with the first fixes I would make. Free. If you want help doing it, we can talk. If not, the plan is yours.</p>
       <div class="actions" id="actions">
         <button type="button" class="btn" id="plan-btn" aria-expanded="false" aria-controls="leadbox">Send me my free one-page plan</button>
       </div>
       <div id="leadbox" hidden>
-        <h2>Want a plan to <em style="color:#7a4f06">stop the leak</em>?</h2>
-        <p>Leave your details and I will look at how calls get answered at your business, then send you a one-page plan with the first fixes I would make. Free. If you want help doing it, we can talk. If not, the plan is yours.</p>
         <form id="lead" novalidate>
           <div class="field">
             <label for="name">Your name</label>
@@ -252,38 +247,54 @@ details.help .plain{min-height:48px}
             <div class="err" id="name-e" role="alert"></div>
           </div>
           <div class="field">
-            <label for="biz">Business name and trade</label>
-            <input class="plain" id="biz" name="business" type="text" autocomplete="organization" placeholder="e.g. Smith Heating and Air, HVAC" required>
+            <label for="biz">Business name</label>
+            <input class="plain" id="biz" name="business" type="text" autocomplete="organization" placeholder="e.g. Smith Heating and Air" required>
             <div class="err" id="biz-e" role="alert"></div>
           </div>
           <div class="field">
-            <label for="contact">Best phone or email</label>
-            <input class="plain" id="contact" name="contact" type="text" inputmode="email" autocomplete="email tel" required>
-            <div class="err" id="contact-e" role="alert"></div>
+            <label for="trade">Trade</label>
+            <select class="plain" id="trade" name="trade" required>
+              <option value="" selected disabled>Choose one</option>
+              <option>HVAC</option>
+              <option>Roofing</option>
+              <option>Plumbing</option>
+              <option>Electrical</option>
+              <option>Lawn and landscaping</option>
+              <option>Other</option>
+            </select>
+            <div class="err" id="trade-e" role="alert"></div>
           </div>
-          <div class="hp" aria-hidden="true"><label>Leave empty <input type="text" name="website" id="website" tabindex="-1" autocomplete="off"></label></div>
+          <div class="field">
+            <label for="phone">Cell phone</label>
+            <input class="plain" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="sms-consent">
+            <div class="err" id="phone-e" role="alert"></div>
+            <p class="small" id="sms-consent" style="margin:8px 0 0">By sending this, you agree to get texts from Advenar about your plan. Msg and data rates may apply. Reply STOP to opt out. <a href="/privacy/#texts">Privacy policy</a></p>
+          </div>
+          <div class="hp" aria-hidden="true"><label>Leave empty <input type="text" name="company_site" id="company_site" tabindex="-1" autocomplete="off"></label></div>
           <button class="btn" type="submit" id="send">Send me the plan</button>
           <p class="small" style="margin:10px 0 0">I use this only to send the plan and follow up about it. No list, no spam.</p>
           <div id="formstatus" class="status" role="status" hidden></div>
         </form>
       </div>
-      <p class="or small" id="or-talk" hidden></p>
+      <p class="small contactline">Rather talk it through? <a id="book" href="#" rel="noopener">Book a 15-minute call with Liam</a>, no pressure.</p>
+      <p class="small" id="bookdev" hidden style="margin:8px 0 0">Dev note: BOOKING_URL is not set yet, so this link does nothing.</p>
+      <p class="small contactline links">Or reach me directly: <a href="tel:+12135195647">Call 213-519-5647</a> <a href="sms:+12135195647">Text me</a> <a href="mailto:advenarhq@gmail.com">advenarhq@gmail.com</a></p>
       <div class="tools">
         <button type="button" class="link" id="copy-btn">Copy my result</button>
         <button type="button" class="link" id="change-btn">Change my numbers</button>
       </div>
-      <p class="small">What you type here stays in your browser. <a href="/privacy/">Privacy</a></p>
+      <p class="small">Your numbers stay in your browser unless you send the plan form. <a href="/privacy/">Privacy</a></p>
       <div id="copystatus" class="status ok" role="status" hidden></div>
       <textarea id="sharebox" readonly hidden aria-label="Your result as text. Select all and copy."></textarea>
       <div id="textme" hidden>
-        <button type="button" class="btn ghost" aria-disabled="true" style="margin-top:10px">Text me my number</button>
+        <button type="button" class="link" aria-disabled="true" style="margin-top:10px">Text me my number</button>
         <p class="small" style="margin:8px 0 0">Dev note: placeholder only. Texting needs a backend (an SMS service), so nothing is sent and this button does nothing. Shown only with ?dev=1.</p>
       </div>
     </section>
   </section>
 
   <p class="why"><strong>Why is this free?</strong> I'm Liam. I run Advenar, a small agency that fills the calendar for local service businesses with appointments that show up. I built this audit myself for the shops I call. Advenar is new, so I would rather earn your trust with something useful than with a pitch. If the number is no big deal, keep it and move on.</p>
-  <p class="src">This is an estimate from the numbers you type, not a promise. The numbers you type stay in your browser and are not sent anywhere. <!-- If LEAD_FORM_ON is ever turned on, update this line. --></p>
+  <p class="src">This is an estimate from the numbers you type, not a promise. The numbers you type stay in your browser. Nothing is sent unless you choose to send the plan form.</p>
 </main>
 <footer class="foot">
   <p>Advenar &middot; Tempe, Arizona</p>
@@ -292,11 +303,10 @@ details.help .plain{min-height:48px}
 </footer>
 
 <script>
-// ===== CONFIG: set these two before going live =====
-const FORM_ENDPOINT = "";   // e.g. "https://example.com/submit". Empty = form sends NOTHING and shows a "not connected" message.
-const BOOKING_URL   = "https://cal.com/advenarhq/15min"; // real booking link for a call with Liam
-const LEAD_FORM_ON  = false; // Launch: lead form hidden until it is connected. To re-enable: set FORM_ENDPOINT above, then set this to true.
-// ===================================================
+// ===== CONFIG =====
+const WORKER_URL  = "https://advenar-audit.advenarhq.workers.dev"; // same Cloudflare Worker the home page form uses (POST /request)
+const BOOKING_URL = "https://cal.com/advenarhq/15min"; // real booking link for a call with Liam
+// ==================
 
 // BEGIN CALC (pure, no DOM; tests load this block)
 var WEEKS_PER_YEAR = 52;
@@ -582,7 +592,6 @@ function buildShareText(r, url){
   });
 
   // ----- next step area -----
-  if (!LEAD_FORM_ON){ $("actions").hidden = true; $("leadbox").hidden = true; $("or-talk").hidden = true; }
   $("plan-btn").addEventListener("click", function(){
     $("leadbox").hidden = false; $("actions").hidden = true; $("plan-btn").setAttribute("aria-expanded","true");
     $("name").focus();
@@ -598,28 +607,36 @@ function buildShareText(r, url){
   // lead form
   function setErr(id,msg){ $(id).textContent = msg || ""; }
   function status(kind,msg){ var s=$("formstatus"); s.className="status "+kind; s.textContent=msg; s.hidden=false; }
+  var REACH = ' Or use the booking link below, or call or text 213-519-5647.';
   $("lead").addEventListener("submit", function(e){
     e.preventDefault();
-    var name=$("name").value.trim(), biz=$("biz").value.trim(), contact=$("contact").value.trim(), bad=false;
+    var name=$("name").value.trim(), biz=$("biz").value.trim(), trade=$("trade").value, phone=$("phone").value.trim(), bad=false;
     setErr("name-e", name ? "" : "Please add your name."); if(!name) bad=true;
     setErr("biz-e", biz ? "" : "Please add your business name."); if(!biz) bad=true;
-    var isEmail=/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(contact), isPhone=(contact.match(/\d/g)||[]).length>=7 && /^[\d\s()+.\-x]+$/i.test(contact);
-    if(!(isEmail||isPhone)){ setErr("contact-e","Please add a phone number or email I can reach you at."); bad=true; } else setErr("contact-e","");
+    setErr("trade-e", trade ? "" : "Please pick your trade."); if(!trade) bad=true;
+    var digits=(phone.match(/\d/g)||[]).length, okPhone=digits>=10 && digits<=15 && phone.length<=30 && /^[\d\s()+.\-]+$/.test(phone);
+    setErr("phone-e", okPhone ? "" : "Please add a cell phone number with area code."); if(!okPhone) bad=true;
     if (bad) return;
-    if ($("website").value) { status("ok","Thanks."); return; } // honeypot: pretend success, send nothing
-    var payload = { source:"missed-call-calculator", name:name, business:biz, contact:contact,
-      numbers: (last && !isExample) ? { callsPerWeek:last.callsPerWeek, unansweredPerWeek:last.missedPerWeek, avgJobValue:last.value, bookingRatePct:last.ratePct,
-        bookingOutOf10:round1(last.ratePct/10), lostPerMonth:Math.round(last.perMonth), lostPerYear:Math.round(last.perYear),
-        lowPerMonth:Math.round(last.low.perMonth), highPerMonth:Math.round(last.high.perMonth) } : null,
-      submittedAt: new Date().toISOString() };
-    if (!FORM_ENDPOINT){
-      status("dev","Not connected yet (dev mode). Nothing was sent. Set FORM_ENDPOINT in the script to turn this on.");
-      return;
-    }
+    if ($("company_site").value) { status("ok","Thanks."); return; } // honeypot: pretend success, send nothing
+    // Exactly the fields the Worker accepts (same as the home page form). Calculator numbers are not sent.
+    var payload = { name:name, business:biz, phone:phone, trade:trade };
     var btn=$("send"); btn.disabled=true; btn.textContent="Sending...";
-    fetch(FORM_ENDPOINT,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
-      .then(function(r){ if(!r.ok) throw new Error("HTTP "+r.status); status("ok","Got it, " + name + ". I will send your plan soon. Want to talk sooner? Use the button below to book a call."); $("lead").reset(); })
-      .catch(function(){ status("bad","That did not go through. Please try again, or use the booking button below."); })
+    fetch(WORKER_URL + "/request",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
+      .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { status:r.status, j:j }; }); })
+      .then(function(x){
+        if (x.j && x.j.ok){
+          status("ok", x.j.mode === "waitlist"
+            ? "Got it, " + name + ". This month's free spots are full, so you are on next month's list. Want to talk sooner? Use the booking link below."
+            : "Got it, " + name + ". I will send your plan soon. Want to talk sooner? Use the booking link below.");
+          $("lead").reset();
+        } else if (x.status === 429) status("bad","You have sent a few requests today." + REACH);
+        else if (x.status === 400 && x.j && x.j.error === "phone") status("bad","Check that phone number.");
+        else if (x.status === 400 && x.j && x.j.error === "name") status("bad","Add your name.");
+        else if (x.status === 400 && x.j && x.j.error === "business") status("bad","Add your business name.");
+        else if (x.status === 400 && x.j && x.j.error === "trade") status("bad","Pick your trade.");
+        else status("bad","That did not go through." + REACH);
+      })
+      .catch(function(){ status("bad","That did not go through." + REACH); })
       .then(function(){ btn.disabled=false; btn.textContent="Send me the plan"; });
   });
 
