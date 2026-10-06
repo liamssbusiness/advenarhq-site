@@ -3,20 +3,20 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Missed-Call Audit | Advenar</title>
+<title>Missed Call Calculator for Contractors | Advenar</title>
 <meta name="description" content="HVAC, plumbing, roofing and lawn care owners: answer four quick questions and see what the calls you miss are costing you each month and each year.">
 <link rel="canonical" href="https://advenarhq.com/audit/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Advenar">
 <meta property="og:url" content="https://advenarhq.com/audit/">
-<meta property="og:title" content="Missed-Call Audit | Advenar">
+<meta property="og:title" content="Missed Call Calculator for Contractors | Advenar">
 <meta property="og:description" content="Four quick questions, about a minute. See a careful estimate of what the calls you miss on the job may be costing you each month.">
 <meta property="og:image" content="https://advenarhq.com/img/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Advenar. A full calendar you didn't have to chase.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Missed-Call Audit | Advenar">
+<meta name="twitter:title" content="Missed Call Calculator for Contractors | Advenar">
 <meta name="twitter:description" content="Four quick questions, about a minute. See a careful estimate of what the calls you miss on the job may be costing you each month.">
 <meta name="twitter:image" content="https://advenarhq.com/img/og.png">
 <meta name="theme-color" content="#0b0d17">
@@ -138,10 +138,14 @@ details.help .plain{min-height:48px}
 #sharebox{width:100%;min-height:110px;font:inherit;font-size:16px;margin:8px 0 0;padding:10px;border:2px solid #8c8068;border-radius:10px}
 .why{margin:30px 4px 0;color:var(--muted);font-size:15px}
 .why strong{color:var(--cream)}
+.how{margin:34px 4px 0}
+.how h2{color:var(--cream);font-size:clamp(22px,6vw,26px);margin:0}
+.how .why{margin:12px 0 0}
 .src{margin:18px 4px 0;color:var(--muted);font-size:13px}
 [hidden]{display:none!important}
 @media (min-width:640px){.wrap{padding-top:48px}.card{padding:26px}}
 </style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Missed-Call Audit", "alternateName": "Missed Call Calculator", "url": "https://advenarhq.com/audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "description": "A free calculator for HVAC, plumbing, roofing and lawn care owners. Answer four questions and see an estimate of what missed calls cost each month and each year.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "provider": {"@type": "ProfessionalService", "@id": "https://advenarhq.com/#org", "name": "Advenar", "url": "https://advenarhq.com/"}}</script>
 </head>
 <body>
 <main class="wrap">
@@ -294,6 +298,13 @@ details.help .plain{min-height:48px}
         <p class="small" style="margin:8px 0 0">Dev note: placeholder only. Texting needs a backend (an SMS service), so nothing is sent and this button does nothing. Shown only with ?dev=1.</p>
       </div>
     </section>
+  </section>
+
+  <section class="how" aria-labelledby="how-h">
+    <h2 id="how-h">How the missed call calculator works</h2>
+    <p class="why">You type four numbers: the calls you get in a week, the calls you miss in that week, what a typical job pays, and how many of the last 10 people you talked to hired you.</p>
+    <p class="why">The math is simple. Missed calls a week, times your own booking rate, times your typical job. That gives the jobs and the dollars you likely lose each month and each year.</p>
+    <p class="why">I do not count every missed call as a lost job. Missed callers are counted at the same rate as the people you do reach. The low and high numbers use a booking rate one notch lower and one notch higher, so you see a range and not one hopeful figure.</p>
   </section>
 
   <p class="why"><strong>Why is this free?</strong> I'm Liam. I run Advenar, a small agency that fills the calendar for local service businesses with appointments that show up. I built this audit myself for the shops I call. Advenar is new, so I would rather earn your trust with something useful than with a pitch. If the number is no big deal, keep it and move on.</p>
