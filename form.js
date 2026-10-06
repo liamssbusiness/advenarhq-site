@@ -4,7 +4,7 @@
   const status = document.getElementById('form-status');
   const left = document.getElementById('audits-left');
   const btn = form && form.querySelector('button[type=submit]');
-  const REACH = '<a href="tel:+12135195647">call or text 213-519-5647</a>, <a href="mailto:advenarhq@gmail.com">email advenarhq@gmail.com</a>, or <a href="https://cal.com/advenarhq/15min">book a 15-minute call</a>';
+  const REACH = '<a href="tel:+13237990663">call or text 323-799-0663</a>, <a href="mailto:advenarhq@gmail.com">email advenarhq@gmail.com</a>, or <a href="https://cal.com/advenarhq/15min">book a 15-minute call</a>';
   const FALLBACK = 'Something broke on my end. Please ' + REACH + ' and I\'ll start your test today.';
   function say(html) { status.innerHTML = html; } // static strings only, never user input
   function setLeft(n) {
