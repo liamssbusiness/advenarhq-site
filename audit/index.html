@@ -131,6 +131,10 @@ details.help .plain{min-height:48px}
 .field{margin:0 0 16px}
 .field label{display:block;font-weight:600;font-size:16px;margin:0 0 6px}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.field.agree{display:flex;gap:12px;align-items:flex-start}
+.field.agree input{flex:none;width:24px;height:24px;margin:2px 0 0}
+.field.agree label{font-weight:400;font-size:14px;margin:0}
+#next .field.agree label a{display:inline;padding:0}
 .status{margin:14px 0 0;padding:12px;border-radius:8px;font-size:16px}
 .status.ok{background:#e1f2e7;color:#12552f}
 .status.dev{background:#fff1cf;color:#5a4300}
@@ -260,23 +264,22 @@ details.help .plain{min-height:48px}
             <div class="err" id="biz-e" role="alert"></div>
           </div>
           <div class="field">
-            <label for="trade">Trade</label>
-            <select class="plain" id="trade" name="trade" required>
-              <option value="" selected disabled>Choose one</option>
-              <option>HVAC</option>
-              <option>Roofing</option>
-              <option>Plumbing</option>
-              <option>Electrical</option>
-              <option>Lawn and landscaping</option>
-              <option>Other</option>
-            </select>
+            <label for="trade">Type of business</label>
+            <input class="plain" id="trade" name="trade" type="text" maxlength="60" placeholder="e.g. HVAC, plumbing, roofing" required>
             <div class="err" id="trade-e" role="alert"></div>
           </div>
           <div class="field">
+            <label for="website">Website (if you have one)</label>
+            <input class="plain" id="website" name="website" type="text" inputmode="url" autocomplete="url" maxlength="200" placeholder="yourbusiness.com">
+          </div>
+          <div class="field">
             <label for="phone">Cell phone</label>
-            <input class="plain" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="sms-consent">
+            <input class="plain" id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
             <div class="err" id="phone-e" role="alert"></div>
-            <p class="small" id="sms-consent" style="margin:8px 0 0">By sending this, you agree to get texts from Advenar about your plan. Msg and data rates may apply. Reply STOP to opt out. <a href="/privacy/#texts">Privacy policy</a></p>
+          </div>
+          <div class="field agree">
+            <input id="sms" name="sms_consent" type="checkbox">
+            <label class="small" for="sms">I agree to get text messages from Advenar at this number about my request. Message frequency varies. Msg and data rates may apply. Reply STOP to opt out, HELP for help. Consent is not a condition of purchase. <a href="/privacy/#texts">Privacy policy</a></label>
           </div>
           <div class="hp" aria-hidden="true"><label>Leave empty <input type="text" name="company_site" id="company_site" tabindex="-1" autocomplete="off"></label></div>
           <button class="btn" type="submit" id="send">Send me the plan</button>
@@ -626,16 +629,16 @@ function buildShareText(r, url){
   var REACH = ' Or use the booking link below, or call or text 323-799-0663.';
   $("lead").addEventListener("submit", function(e){
     e.preventDefault();
-    var name=$("name").value.trim(), biz=$("biz").value.trim(), trade=$("trade").value, phone=$("phone").value.trim(), bad=false;
+    var name=$("name").value.trim(), biz=$("biz").value.trim(), trade=$("trade").value.trim(), website=$("website").value.trim(), sms=$("sms").checked, phone=$("phone").value.trim(), bad=false;
     setErr("name-e", name ? "" : "Please add your name."); if(!name) bad=true;
     setErr("biz-e", biz ? "" : "Please add your business name."); if(!biz) bad=true;
-    setErr("trade-e", trade ? "" : "Please pick your trade."); if(!trade) bad=true;
+    setErr("trade-e", trade ? "" : "Please add your type of business."); if(!trade) bad=true;
     var digits=(phone.match(/\d/g)||[]).length, okPhone=digits>=10 && digits<=15 && phone.length<=30 && /^[\d\s()+.\-]+$/.test(phone);
     setErr("phone-e", okPhone ? "" : "Please add a cell phone number with area code."); if(!okPhone) bad=true;
     if (bad) return;
     if ($("company_site").value) { status("ok","Thanks."); return; } // honeypot: pretend success, send nothing
     // Exactly the fields the Worker accepts (same as the home page form). Calculator numbers are not sent.
-    var payload = { name:name, business:biz, phone:phone, trade:trade };
+    var payload = { name:name, business:biz, phone:phone, trade:trade, website:website, sms_consent:sms };
     var btn=$("send"); btn.disabled=true; btn.textContent="Sending...";
     fetch(WORKER_URL + "/request",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)})
       .then(function(r){ return r.json().catch(function(){ return {}; }).then(function(j){ return { status:r.status, j:j }; }); })
@@ -649,7 +652,8 @@ function buildShareText(r, url){
         else if (x.status === 400 && x.j && x.j.error === "phone") status("bad","Check that phone number.");
         else if (x.status === 400 && x.j && x.j.error === "name") status("bad","Add your name.");
         else if (x.status === 400 && x.j && x.j.error === "business") status("bad","Add your business name.");
-        else if (x.status === 400 && x.j && x.j.error === "trade") status("bad","Pick your trade.");
+        else if (x.status === 400 && x.j && x.j.error === "website") status("bad","That website looks too long.");
+        else if (x.status === 400 && x.j && x.j.error === "trade") status("bad","Add your type of business.");
         else status("bad","That did not go through." + REACH);
       })
       .catch(function(){ status("bad","That did not go through." + REACH); })

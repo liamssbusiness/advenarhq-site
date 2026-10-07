@@ -118,7 +118,7 @@
   <p>Within 3 business days you get a written report: how long the reply took, where the lead would have gone cold and what a competitor did in the same window, and the fixes, ranked by the jobs they save. <strong>Yours to keep either way.</strong></p>
   <p>Why free? <strong>It's a bribe.</strong> Showing you the jobs you're losing is the fastest way to earn your business. If the report shows nothing worth fixing, you're doing great, and you just got a free second opinion. <strong>No sales pitch unless you ask for one.</strong> I do these myself, so I take 10 a month.</p>
   <div class="planner planner--full" aria-hidden="true"></div>
-  <p class="lead">Fill this out. It takes 30 seconds. <strong>I'll text you to confirm, then your test starts.</strong></p>
+  <p class="lead">Fill this out. It takes 30 seconds. <strong>I'll text or call you to confirm, then your test starts.</strong></p>
   <p class="small"><span id="audits-left">10 free tests a month.</span></p>
   <noscript><p class="status-note">This form needs JavaScript. No problem: <a href="tel:+13237990663">call</a> or <a href="sms:+13237990663">text</a> 323-799-0663, email <a href="mailto:advenarhq@gmail.com">advenarhq@gmail.com</a>, or <a href="https://cal.com/advenarhq/15min">book a 15-minute call</a>.</p><style>#audit-form{display:none}</style></noscript>
   <form id="audit-form" action="#apply" method="post">
@@ -132,24 +132,19 @@
     </div>
     <div class="field">
       <label for="f-phone">Cell phone</label>
-      <input id="f-phone" name="phone" type="tel" required autocomplete="tel" aria-describedby="sms-consent">
-      <p class="consent" id="sms-consent">By submitting, you agree to get texts from Advenar about this request. Msg and data rates may apply. Reply STOP to opt out. <a href="/privacy/#texts">Privacy policy</a></p>
+      <input id="f-phone" name="phone" type="tel" required autocomplete="tel">
     </div>
     <div class="field">
       <label for="f-website">Website</label>
       <input id="f-website" name="website" type="text" inputmode="url" autocomplete="url" placeholder="yourbusiness.com">
     </div>
     <div class="field">
-      <label for="f-trade">Trade</label>
-      <select id="f-trade" name="trade" required>
-        <option value="" selected disabled>Choose one</option>
-        <option>HVAC</option>
-        <option>Roofing</option>
-        <option>Plumbing</option>
-        <option>Electrical</option>
-        <option>Lawn and landscaping</option>
-        <option>Other</option>
-      </select>
+      <label for="f-trade">Type of business</label>
+      <input id="f-trade" name="trade" type="text" required maxlength="60" placeholder="HVAC, plumbing, roofing">
+    </div>
+    <div class="field agree">
+      <input id="f-sms" name="sms_consent" type="checkbox">
+      <label for="f-sms">I agree to get text messages from Advenar at this number about my request. Message frequency varies. Msg and data rates may apply. Reply STOP to opt out, HELP for help. Consent is not a condition of purchase. <a href="/privacy/#texts">Privacy policy</a></label>
     </div>
     <div class="hp" aria-hidden="true">
       <label for="f-company">Company site</label>

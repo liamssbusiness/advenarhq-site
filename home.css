@@ -272,8 +272,9 @@ main{overflow-x:clip}
 /* Section-ending nudges, the phone consent line, and contact blocks */
 section p.go{margin-top:1.6em;padding-top:1.1em;border-top:1px solid var(--line);color:var(--cream);font-size:17px}
 section p.go a{display:inline-block;padding:9px 0;margin:-3px 0}
-.consent{margin:8px 0 0!important;font-size:13px!important;line-height:1.45;color:var(--muted)!important}
-.consent a{display:inline-block;padding:13px 0;margin:-6px 0}
+.field.agree{display:flex;gap:12px;align-items:flex-start}
+.field.agree input{flex:none;width:22px;height:22px;min-height:0;padding:0;margin:1px 0 0;accent-color:var(--gold)}
+.field.agree label{font:400 13px/1.45 var(--sans);letter-spacing:0;text-transform:none;margin:0}
 .liam-copy .btn{margin-top:6px}
 .liam-copy .btn{color:var(--deep)}
 p.contact{font-size:16px;color:var(--cream)}

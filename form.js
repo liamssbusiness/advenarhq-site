@@ -18,6 +18,7 @@
     e.preventDefault();
     if (!WORKER_URL) { say(FALLBACK); return; }
     const data = Object.fromEntries(new FormData(form));
+    const how = data.sms_consent ? 'text' : 'call'; // unchecked box: no texts, Liam calls instead
     btn.disabled = true; say('Sending...');
     try {
       const r = await fetch(WORKER_URL + '/request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
@@ -25,13 +26,13 @@
       if (j.ok) {
         form.reset();
         say(j.mode === 'audit'
-          ? 'Got it. I\'ll text you to confirm. Your report lands within 3 business days. Want to talk sooner? <a href="https://cal.com/advenarhq/15min">Book a 15-minute call.</a>'
-          : 'You\'re on next month\'s list. I\'ll text you the day a spot opens. Want to talk sooner? <a href="https://cal.com/advenarhq/15min">Book a 15-minute call.</a>');
+          ? 'Got it. I\'ll ' + how + ' you to confirm. Your report lands within 3 business days. Want to talk sooner? <a href="https://cal.com/advenarhq/15min">Book a 15-minute call.</a>'
+          : 'You\'re on next month\'s list. I\'ll ' + how + ' you the day a spot opens. Want to talk sooner? <a href="https://cal.com/advenarhq/15min">Book a 15-minute call.</a>');
         setLeft(j.left);
       } else if (r.status === 429) {
         say('You\'ve sent a few requests today. Please ' + REACH + ' and I\'ll start your test.');
       } else if (r.status === 400) {
-        const msg = { name: 'Add your name.', business: 'Add your business name.', phone: 'Check that phone number.', website: 'That website looks too long.', trade: 'Pick your trade.' }[j.error];
+        const msg = { name: 'Add your name.', business: 'Add your business name.', phone: 'Check that phone number.', website: 'That website looks too long.', trade: 'Add your type of business.' }[j.error];
         if (msg) status.textContent = msg; else say(FALLBACK);
       } else say(FALLBACK);
     } catch { say(FALLBACK); }
