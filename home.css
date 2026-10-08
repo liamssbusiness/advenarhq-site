@@ -99,6 +99,10 @@ main #liam::before{margin-bottom:16px}
 
 .card{background:rgba(255,255,255,.05);border:1px solid var(--line);border-left:2px solid var(--gold);border-radius:10px;padding:28px 28px}
 .card p{font-size:19px;color:var(--cream)}
+#sample .card{margin-bottom:16px}
+#sample .card p{font-size:17px;margin-bottom:.6em}
+#sample .card p.fix{color:var(--gold);font-weight:600;margin-bottom:0}
+#sample .sample-close{margin-top:1.6em;color:var(--cream);font-size:19px}
 
 .checks{list-style:none;margin:32px 0;padding:0}
 .checks li{position:relative;padding:0 0 0 38px;margin-bottom:18px;color:var(--muted)}
