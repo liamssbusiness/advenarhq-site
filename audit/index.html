@@ -150,12 +150,12 @@ details.help .plain{min-height:48px}
 [hidden]{display:none!important}
 @media (min-width:640px){.wrap{padding-top:48px}.card{padding:26px}}
 </style>
-<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Missed-Call Audit", "alternateName": "Missed Call Calculator", "url": "https://advenarhq.com/audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "description": "A free calculator for HVAC, plumbing, roofing and lawn care owners. Answer four questions and see an estimate of what missed calls cost each month and each year.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "provider": {"@type": "ProfessionalService", "@id": "https://advenarhq.com/#org", "name": "Advenar", "url": "https://advenarhq.com/"}}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "Missed-Call Calculator", "alternateName": "Missed Call Calculator", "url": "https://advenarhq.com/audit/", "applicationCategory": "BusinessApplication", "operatingSystem": "Any", "description": "A free calculator for HVAC, plumbing, roofing and lawn care owners. Answer four questions and see an estimate of what missed calls cost each month and each year.", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "provider": {"@type": "ProfessionalService", "@id": "https://advenarhq.com/#org", "name": "Advenar", "url": "https://advenarhq.com/"}}</script>
 </head>
 <body>
 <main class="wrap">
   <p class="topbook"><a href="https://cal.com/advenarhq/15min">Book a meeting</a></p>
-  <p class="brand"><b>Advenar</b> &nbsp;|&nbsp; the Missed-Call Audit &nbsp;|&nbsp; <a class="homelink" href="/">Back to home</a></p>
+  <p class="brand"><b>Advenar</b> &nbsp;|&nbsp; the Missed-Call Calculator &nbsp;|&nbsp; <a class="homelink" href="/">Back to home</a></p>
 
   <header id="intro">
     <h1>What are the calls you miss <em>while you're on the job</em> costing you?</h1>
@@ -312,7 +312,7 @@ details.help .plain{min-height:48px}
     <p class="why">Want the math explained? <a href="/missed-call-cost/">What a missed call costs a contractor</a></p>
   </section>
 
-  <p class="why"><strong>Why is this free?</strong> I'm Liam. I run Advenar, a small agency that fills the calendar for local service businesses with appointments that show up. I built this audit myself for the shops I call. Advenar is new, so I would rather earn your trust with something useful than with a pitch. If the number is no big deal, keep it and move on.</p>
+  <p class="why"><strong>Why is this free?</strong> I'm Liam. I run Advenar, a small agency that fills the calendar for local service businesses with appointments that show up. I built this calculator myself for the shops I call. Advenar is new, so I would rather earn your trust with something useful than with a pitch. If the number is no big deal, keep it and move on.</p>
   <p class="src">This is an estimate from the numbers you type, not a promise. The numbers you type stay in your browser. Nothing is sent unless you choose to send the plan form.</p>
 </main>
 <footer class="foot">
@@ -439,7 +439,7 @@ function buildPrefillUrl(base, r){
 function buildShareText(r, url){
   if (!r || !r.ready) return "";
   var lines = [
-    "My Missed-Call Audit result (Advenar). An estimate, not a promise.",
+    "My Missed-Call Calculator result (Advenar). An estimate, not a promise.",
     "About " + formatMoney(r.perMonth) + " a month, " + formatMoney(r.perYear) + " a year, lost to calls I miss.",
     "Range: " + formatMoney(r.low.perMonth) + " to " + formatMoney(r.high.perMonth) + " a month (booking rate one notch down and up).",
     mathSentence(r)
