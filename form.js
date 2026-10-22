@@ -4,7 +4,7 @@
   const status = document.getElementById('form-status');
   const left = document.getElementById('audits-left');
   const btn = form && form.querySelector('button[type=submit]');
-  const REACH = '<a href="tel:+13237990663">call or text 323-799-0663</a>, <a href="mailto:advenarhq@gmail.com">email advenarhq@gmail.com</a>, or <a href="https://cal.com/advenarhq/15min">book a 15-minute call</a>';
+  const REACH = '<a href="tel:+13237990663">call or text 323-799-0663</a>, <a href="mailto:advenarhq@gmail.com">email advenarhq@gmail.com</a>, or <a href="sms:+13237990663">text me to set a time</a>';
   const FALLBACK = 'Something broke on my end. Please ' + REACH + ' and I\'ll start your test today.';
   function say(html) { status.innerHTML = html; } // static strings only, never user input
   function setLeft(n) {
@@ -26,8 +26,8 @@
       if (j.ok) {
         form.reset();
         say(j.mode === 'audit'
-          ? 'Got it. I\'ll ' + how + ' you to confirm. Your report lands within 3 business days. Want to talk sooner? <a href="https://cal.com/advenarhq/15min">Book a 15-minute call.</a>'
-          : 'You\'re on next month\'s list. I\'ll ' + how + ' you the day a spot opens. Want to talk sooner? <a href="https://cal.com/advenarhq/15min">Book a 15-minute call.</a>');
+          ? 'Got it. I\'ll ' + how + ' you to confirm. Your report lands within 3 business days. Want to talk sooner? <a href="sms:+13237990663">Text me.</a>'
+          : 'You\'re on next month\'s list. I\'ll ' + how + ' you the day a spot opens. Want to talk sooner? <a href="sms:+13237990663">Text me.</a>');
         setLeft(j.left);
       } else if (r.status === 429) {
         say('You\'ve sent a few requests today. Please ' + REACH + ' and I\'ll start your test.');

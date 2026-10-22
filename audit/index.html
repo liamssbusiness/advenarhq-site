@@ -154,7 +154,7 @@ details.help .plain{min-height:48px}
 </head>
 <body>
 <main class="wrap">
-  <p class="topbook"><a href="https://cal.com/advenarhq/15min">Book a meeting</a></p>
+  <p class="topbook"><a href="sms:+13237990663">Text me</a></p>
   <p class="brand"><b>Advenar</b> &nbsp;|&nbsp; the Missed-Call Calculator &nbsp;|&nbsp; <a class="homelink" href="/">Back to home</a></p>
 
   <header id="intro">
@@ -292,7 +292,7 @@ details.help .plain{min-height:48px}
           <div id="formstatus" class="status" role="status" hidden></div>
         </form>
       </div>
-      <p class="small contactline">Rather talk it through? <a id="book" href="#" rel="noopener">Book a 15-minute call with Liam</a>, no pressure.</p>
+      <p class="small contactline">Rather talk it through? <a id="book" href="#" rel="noopener">Text Liam to set up a 15-minute call</a>, no pressure.</p>
       <p class="small" id="bookdev" hidden style="margin:8px 0 0">Dev note: BOOKING_URL is not set yet, so this link does nothing.</p>
       <p class="small contactline links">Or reach me directly: <a href="tel:+13237990663">Call 323-799-0663</a> <a href="sms:+13237990663">Text me</a> <a href="mailto:advenarhq@gmail.com">advenarhq@gmail.com</a></p>
       <div class="tools">
@@ -329,7 +329,7 @@ details.help .plain{min-height:48px}
 <script>
 // ===== CONFIG =====
 const WORKER_URL  = "https://advenar-audit.advenarhq.workers.dev"; // same Cloudflare Worker the home page form uses (POST /request)
-const BOOKING_URL = "https://cal.com/advenarhq/15min"; // real booking link for a call with Liam
+const BOOKING_URL = "sms:+13237990663"; // booking is a text to Liam, who sends a Google Meet link
 // ==================
 
 // BEGIN CALC (pure, no DOM; tests load this block)
@@ -623,7 +623,7 @@ function buildShareText(r, url){
 
   var bookSet = BOOKING_URL && BOOKING_URL.indexOf("REPLACE") !== 0;
   var book = $("book");
-  if (bookSet){ book.href = BOOKING_URL; book.target = "_blank"; }
+  if (bookSet){ book.href = BOOKING_URL;  }
   else { book.setAttribute("aria-disabled","true"); book.addEventListener("click", function(e){ e.preventDefault(); }); $("bookdev").hidden = false; }
 
   try { if (new URLSearchParams(location.search).get("dev") === "1") $("textme").hidden = false; } catch(e){}
